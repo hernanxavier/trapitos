@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tra_costos_tra_costos,tra_costos.tra_costos,model_tra_costos_tra_costos,,1,0,0,0
