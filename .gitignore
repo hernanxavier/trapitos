@@ -97,3 +97,11 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+
+# VirtualEnv
+/bin
+/lib
+/include
+pip-selfcheck.json
+.Python
