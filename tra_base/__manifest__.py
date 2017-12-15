@@ -28,8 +28,8 @@
     'data': [
         # 'security/ir.model.access.csv',
         'views/tra_base_views.xml',
-        'views/tra_base_menu.xml',
         'views/tra_base_actions.xml',
+        'views/tra_base_menu.xml',
         'views/tra_base_templates.xml',
     ],
     # only loaded in demonstration mode

@@ -1,6 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
   <data>
-
     <!-- **************************************
       Vistas para el modelo tra_ColorTela
     *******************************************-->
@@ -32,7 +32,6 @@
         </tree>
       </field>
     </record>
-
 
     <!-- **************************************
       Vistas para el modelo tra_Tela
@@ -70,8 +69,7 @@
       </field>
     </record>
 
-
-
+    
     <!-- explicit list view definition -->
     <!--
     <record model="ir.ui.view" id="tra_base.list">
