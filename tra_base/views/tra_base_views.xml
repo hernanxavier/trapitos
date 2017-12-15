@@ -1,0 +1,132 @@
+<odoo>
+  <data>
+
+    <!-- **************************************
+      Vistas para el modelo tra_ColorTela
+    *******************************************-->
+
+    <!-- Vista FORM -->
+    <record model = 'ir.ui.view' id = 'tra_ColorTela_form'>
+      <field name = 'model'>tra.color.tela</field>
+      <field name = 'arch' type = "xml">
+        <form>
+          <sheet>
+            <group>
+              <field name = 'name' placeholder = 'Nombre del color de tela'/>
+              <field name = 'codigo' placeholder = 'Código para el color'/>
+              <field name = 'observacion' placeholder = 'Ingrese un texto'/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Vista TREE -->
+    <record model = 'ir.ui.view' id = 'tra_ColorTela_tree'>
+      <field name = 'model'>tra.color.tela</field>
+      <field name = 'arch' type = 'xml'>
+        <tree>
+            <field name = 'name' />
+            <field name = 'codigo' />
+            <field name = 'observacion' />
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- **************************************
+      Vistas para el modelo tra_Tela
+    *******************************************-->
+    <!-- Vista FORM -->
+    <record model = "ir.ui.view" id = "tra_Tela_form">
+      <field name = "model">tra.tela</field>
+      <field name = "arch" type = "xml">
+        <form>
+          <sheet>
+            <group>
+              <field name = 'name' placeholder = 'Nombre de la tela'/>
+              <field name = 'codigo' placeholder = 'Código para la tela'/>
+              <field name = 'color_id' placeholder = 'Elija el color para la tela'/>
+              <field name = 'costo' placeholder = 'Cuál es el costo'/>
+              <field name = 'iva' placeholder = 'Porcentaje del IVA'/>
+              <field name = 'observacion' placeholder = 'Ingrese un texto'/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Vista TREE -->
+    <record model = 'ir.ui.view' id = 'tra_Tela_tree'>
+      <field name = 'model'>tra.tela</field>
+      <field name = "arch" type = 'xml'>
+        <tree>
+            <field name = 'name' />
+            <field name = 'codigo' />
+            <field name = 'color_id' />
+            <field name = 'costo' />
+            <field name = 'observacion' />
+        </tree>
+      </field>
+    </record>
+
+
+
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="tra_base.list">
+      <field name="name">tra_base list</field>
+      <field name="model">tra_base.tra_base</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="tra_base.action_window">
+      <field name="name">tra_base window</field>
+      <field name="res_model">tra_base.tra_base</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="tra_base.action_server">
+      <field name="name">tra_base server</field>
+      <field name="model_id" ref="model_tra_base_tra_base"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="tra_base" id="tra_base.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="tra_base.menu_1" parent="tra_base.menu_root"/>
+    <menuitem name="Menu 2" id="tra_base.menu_2" parent="tra_base.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="tra_base.menu_1_list" parent="tra_base.menu_1"
+              action="tra_base.action_window"/>
+    <menuitem name="Server to list" id="tra_base" parent="tra_base.menu_2"
+              action="tra_base.action_server"/>
+    -->
+  </data>
+</odoo>

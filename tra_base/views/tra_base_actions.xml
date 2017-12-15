@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <!-- ********************************
+      Actions para Modelo COLOR
+    **********************************-->
+    <record model = 'ir.actions.act_window' id = 'tra_color_tela_action'>
+      <field name = 'name'>Color</field>
+      <field name = 'res_model'>tra.color.tela</field>
+      <field name = 'view_mode'>form,tree</field>
+    </record>
+    <!-- FORM -->
+    <record model = 'ir.actions.act_window.view' id = 'tra_color_tela_form'>
+      <field eval = '2' name = 'sequence'/>
+      <field name = 'view_mode'>form</field>
+      <field name = 'view_id' ref = 'tra_ColorTela_form'/>
+      <field name = 'act_window_id' ref = 'tra_color_tela_action'/>
+    </record>
+    <!-- TREE -->
+    <record model = 'ir.actions.act_window.view' id = 'tra_color_tela_tree'>
+      <field eval = '1' name = 'sequence'/>
+      <field name = 'view_mode'>tree</field>
+      <field name = 'view_id' ref = 'tra_ColorTela_tree'/>
+      <field name = 'act_window_id' ref = 'tra_color_tela_action'/>
+    </record>
+
+    <!-- ********************************
+      Actions para Modelo TELA
+    **********************************-->
+    <record model = 'ir.actions.act_window' id ='tra_tela_action'>
+      <field name = 'name'>Tela</field>
+      <field name = 'res_model'>tra.tela</field>
+      <field name = 'view_mode'>form,tree</field>
+    </record>
+    <!-- FORM -->
+    <record model = 'ir.actions.act_window.view' id= 'tra_tela_form'>
+      <field eval = '2' name = 'sequence'/>
+      <field name = 'view_mode'>form</field>
+      <field name = 'view_id' ref = 'tra_Tela_form'/>
+      <field name = 'act_window_id' ref = 'tra_tela_action'/>
+    </record>
+    <!-- TREE -->
+    <record model = 'ir.actions.act_window.view' id= 'tra_tela_tree'>
+      <field eval = '1' name = 'sequence'/>
+      <field name = 'view_mode'>tree</field>
+      <field name = 'view_id' ref = 'tra_Tela_tree'/>
+      <field name = 'act_window_id' ref = 'tra_tela_action'/>
+    </record>
+
+  </data>
+</odoo>
