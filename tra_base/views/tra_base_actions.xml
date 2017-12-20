@@ -9,18 +9,18 @@
       <field name = 'res_model'>tra.color.tela</field>
       <field name = 'view_mode'>form,tree</field>
     </record>
-    <!-- FORM -->
-    <record model = 'ir.actions.act_window.view' id = 'tra_color_tela_form'>
-      <field eval = '2' name = 'sequence'/>
-      <field name = 'view_mode'>form</field>
-      <field name = 'view_id' ref = 'tra_ColorTela_form'/>
-      <field name = 'act_window_id' ref = 'tra_color_tela_action'/>
-    </record>
     <!-- TREE -->
     <record model = 'ir.actions.act_window.view' id = 'tra_color_tela_tree'>
       <field eval = '1' name = 'sequence'/>
       <field name = 'view_mode'>tree</field>
       <field name = 'view_id' ref = 'tra_ColorTela_tree'/>
+      <field name = 'act_window_id' ref = 'tra_color_tela_action'/>
+    </record>
+    <!-- FORM -->
+    <record model = 'ir.actions.act_window.view' id = 'tra_color_tela_form'>
+      <field eval = '2' name = 'sequence'/>
+      <field name = 'view_mode'>form</field>
+      <field name = 'view_id' ref = 'tra_ColorTela_form'/>
       <field name = 'act_window_id' ref = 'tra_color_tela_action'/>
     </record>
 
@@ -32,6 +32,13 @@
       <field name = 'res_model'>tra.tela</field>
       <field name = 'view_mode'>form,tree</field>
     </record>
+    <!-- TREE -->
+    <record model = 'ir.actions.act_window.view' id= 'tra_tela_tree'>
+      <field eval = '1' name = 'sequence'/>
+      <field name = 'view_mode'>tree</field>
+      <field name = 'view_id' ref = 'tra_Tela_tree'/>
+      <field name = 'act_window_id' ref = 'tra_tela_action'/>
+    </record>
     <!-- FORM -->
     <record model = 'ir.actions.act_window.view' id= 'tra_tela_form'>
       <field eval = '2' name = 'sequence'/>
@@ -39,12 +46,122 @@
       <field name = 'view_id' ref = 'tra_Tela_form'/>
       <field name = 'act_window_id' ref = 'tra_tela_action'/>
     </record>
+
+    <!-- ********************************
+      Actions para Modelo TALLA
+    **********************************-->
+    <record model = 'ir.actions.act_window' id ='tra_talla_action'>
+      <field name = 'name'>Talla</field>
+      <field name = 'res_model'>tra.talla</field>
+      <field name = 'view_mode'>form,tree</field>
+    </record>
     <!-- TREE -->
-    <record model = 'ir.actions.act_window.view' id= 'tra_tela_tree'>
+    <record model = 'ir.actions.act_window.view' id= 'tra_talla_tree'>
       <field eval = '1' name = 'sequence'/>
       <field name = 'view_mode'>tree</field>
-      <field name = 'view_id' ref = 'tra_Tela_tree'/>
-      <field name = 'act_window_id' ref = 'tra_tela_action'/>
+      <field name = 'view_id' ref = 'tra_Talla_tree'/>
+      <field name = 'act_window_id' ref = 'tra_talla_action'/>
+    </record>
+    <!-- FORM -->
+    <record model = 'ir.actions.act_window.view' id= 'tra_talla_form'>
+      <field eval = '2' name = 'sequence'/>
+      <field name = 'view_mode'>form</field>
+      <field name = 'view_id' ref = 'tra_Talla_form'/>
+      <field name = 'act_window_id' ref = 'tra_talla_action'/>
+    </record>
+
+    <!-- ********************************
+      Actions para Modelo tra_GastoVenta
+    **********************************-->
+    <record model = 'ir.actions.act_window' id ='tra_gasto_venta_action'>
+      <field name = 'name'>GastoVenta</field>
+      <field name = 'res_model'>tra.gasto.venta</field>
+      <field name = 'view_mode'>form</field>
+    </record>
+    <!-- FORM -->
+    <record model = 'ir.actions.act_window.view' id= 'tra_gasto_venta_form'>
+      <field eval = '0' name = 'sequence'/>
+      <field name = 'view_mode'>form</field>
+      <field name = 'view_id' ref = 'tra_GastoVenta_form'/>
+      <field name = 'act_window_id' ref = 'tra_gasto_venta_action'/>
+    </record>
+
+    <!-- ********************************
+      Actions para Modelo tra_GastoAdmin
+    **********************************-->
+    <record model = 'ir.actions.act_window' id ='tra_gasto_admin_action'>
+      <field name = 'name'>GastoAdmin</field>
+      <field name = 'res_model'>tra.gasto.admin</field>
+      <field name = 'view_mode'>form</field>
+    </record>
+    <!-- FORM -->
+    <record model = 'ir.actions.act_window.view' id= 'tra_gasto_admin_form'>
+      <field eval = '0' name = 'sequence'/>
+      <field name = 'view_mode'>form</field>
+      <field name = 'view_id' ref = 'tra_GastoAdmin_form'/>
+      <field name = 'act_window_id' ref = 'tra_gasto_admin_action'/>
+    </record>
+
+    <!-- ********************************
+      Actions para Modelo tra_GastoIndFabricacion
+    **********************************-->
+    <record model = 'ir.actions.act_window' id ='tra_gasto_ind_fabricacion_action'>
+      <field name = 'name'>GastoIndFabricacion</field>
+      <field name = 'res_model'>tra.gasto.ind.fabricacion</field>
+      <field name = 'view_mode'>form</field>
+    </record>
+    <!-- FORM -->
+    <record model = 'ir.actions.act_window.view' id= 'tra_gasto_ind_fabricacion_form'>
+      <field eval = '0' name = 'sequence'/>
+      <field name = 'view_mode'>form</field>
+      <field name = 'view_id' ref = 'tra_GastoIndFabricacion_form'/>
+      <field name = 'act_window_id' ref = 'tra_gasto_ind_fabricacion_action'/>
+    </record>
+
+    <!-- ********************************
+      Actions para Modelo MATERIA EXTRA
+    **********************************-->
+    <record model = 'ir.actions.act_window' id ='tra_materia_extra_action'>
+      <field name = 'name'>MateriaExtra</field>
+      <field name = 'res_model'>tra.materia.extra</field>
+      <field name = 'view_mode'>form,tree</field>
+    </record>
+    <!-- TREE -->
+    <record model = 'ir.actions.act_window.view' id= 'tra_materia_extra_tree'>
+      <field eval = '1' name = 'sequence'/>
+      <field name = 'view_mode'>tree</field>
+      <field name = 'view_id' ref = 'tra_MateriaExtra_tree'/>
+      <field name = 'act_window_id' ref = 'tra_materia_extra_action'/>
+    </record>
+    <!-- FORM -->
+    <record model = 'ir.actions.act_window.view' id= 'tra_materia_extra_form'>
+      <field eval = '2' name = 'sequence'/>
+      <field name = 'view_mode'>form</field>
+      <field name = 'view_id' ref = 'tra_MateriaExtra_form'/>
+      <field name = 'act_window_id' ref = 'tra_materia_extra_action'/>
+    </record>
+
+    <!-- ********************************
+      Actions para Modelo MATERIA FORRO
+    **********************************-->
+    <record model = 'ir.actions.act_window' id ='tra_materia_forro_action'>
+      <field name = 'name'>MateriaForro</field>
+      <field name = 'res_model'>tra.materia.forro</field>
+      <field name = 'view_mode'>form,tree</field>
+    </record>
+    <!-- TREE -->
+    <record model = 'ir.actions.act_window.view' id= 'tra_materia_forro_tree'>
+      <field eval = '1' name = 'sequence'/>
+      <field name = 'view_mode'>tree</field>
+      <field name = 'view_id' ref = 'tra_MateriaForro_tree'/>
+      <field name = 'act_window_id' ref = 'tra_materia_forro_action'/>
+    </record>
+    <!-- FORM -->
+    <record model = 'ir.actions.act_window.view' id= 'tra_materia_forro_form'>
+      <field eval = '2' name = 'sequence'/>
+      <field name = 'view_mode'>form</field>
+      <field name = 'view_id' ref = 'tra_MateriaForro_form'/>
+      <field name = 'act_window_id' ref = 'tra_materia_forro_action'/>
     </record>
 
   </data>
