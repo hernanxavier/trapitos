@@ -71,51 +71,72 @@
     </record>
 
     <!-- ********************************
-      Actions para Modelo tra_GastoVenta
+      Actions para Modelo TIEMPO TRABAJO
     **********************************-->
-    <record model = 'ir.actions.act_window' id ='tra_gasto_venta_action'>
-      <field name = 'name'>GastoVenta</field>
-      <field name = 'res_model'>tra.gasto.venta</field>
-      <field name = 'view_mode'>form</field>
+    <record model = 'ir.actions.act_window' id ='tra_tiempo_trabajo_action'>
+      <field name = 'name'>TiempoTrabajo</field>
+      <field name = 'res_model'>tra.tiempo.trabajo</field>
+      <field name = 'view_mode'>form,tree</field>
+    </record>
+    <!-- TREE -->
+    <record model = 'ir.actions.act_window.view' id= 'tra_tiempo_trabajo_tree'>
+      <field eval = '1' name = 'sequence'/>
+      <field name = 'view_mode'>tree</field>
+      <field name = 'view_id' ref = 'tra_TiempoTrabajo_tree'/>
+      <field name = 'act_window_id' ref = 'tra_tiempo_trabajo_action'/>
     </record>
     <!-- FORM -->
-    <record model = 'ir.actions.act_window.view' id= 'tra_gasto_venta_form'>
-      <field eval = '0' name = 'sequence'/>
+    <record model = 'ir.actions.act_window.view' id= 'tra_tiempo_trabajo_form'>
+      <field eval = '2' name = 'sequence'/>
       <field name = 'view_mode'>form</field>
-      <field name = 'view_id' ref = 'tra_GastoVenta_form'/>
-      <field name = 'act_window_id' ref = 'tra_gasto_venta_action'/>
+      <field name = 'view_id' ref = 'tra_TiempoTrabajo_form'/>
+      <field name = 'act_window_id' ref = 'tra_tiempo_trabajo_action'/>
     </record>
 
     <!-- ********************************
-      Actions para Modelo tra_GastoAdmin
+      Actions para Modelo FORMA PAGO
     **********************************-->
-    <record model = 'ir.actions.act_window' id ='tra_gasto_admin_action'>
-      <field name = 'name'>GastoAdmin</field>
-      <field name = 'res_model'>tra.gasto.admin</field>
-      <field name = 'view_mode'>form</field>
+    <record model = 'ir.actions.act_window' id ='tra_forma_pago_action'>
+      <field name = 'name'>FormaPago</field>
+      <field name = 'res_model'>tra.forma.pago</field>
+      <field name = 'view_mode'>form,tree</field>
+    </record>
+    <!-- TREE -->
+    <record model = 'ir.actions.act_window.view' id= 'tra_forma_pago_tree'>
+      <field eval = '1' name = 'sequence'/>
+      <field name = 'view_mode'>tree</field>
+      <field name = 'view_id' ref = 'tra_FormaPago_tree'/>
+      <field name = 'act_window_id' ref = 'tra_forma_pago_action'/>
     </record>
     <!-- FORM -->
-    <record model = 'ir.actions.act_window.view' id= 'tra_gasto_admin_form'>
-      <field eval = '0' name = 'sequence'/>
+    <record model = 'ir.actions.act_window.view' id= 'tra_forma_pago_form'>
+      <field eval = '2' name = 'sequence'/>
       <field name = 'view_mode'>form</field>
-      <field name = 'view_id' ref = 'tra_GastoAdmin_form'/>
-      <field name = 'act_window_id' ref = 'tra_gasto_admin_action'/>
+      <field name = 'view_id' ref = 'tra_FormaPago_form'/>
+      <field name = 'act_window_id' ref = 'tra_forma_pago_action'/>
     </record>
 
     <!-- ********************************
-      Actions para Modelo tra_GastoIndFabricacion
+      Actions para Modelo UTILIDAD
     **********************************-->
-    <record model = 'ir.actions.act_window' id ='tra_gasto_ind_fabricacion_action'>
-      <field name = 'name'>GastoIndFabricacion</field>
-      <field name = 'res_model'>tra.gasto.ind.fabricacion</field>
-      <field name = 'view_mode'>form</field>
+    <record model = 'ir.actions.act_window' id ='tra_utilidad_action'>
+      <field name = 'name'>Utilidad</field>
+      <field name = 'res_model'>tra.utilidad</field>
+      <field name = 'view_mode'>form,tree</field>
+    </record>
+    <!-- TREE -->
+    <record model = 'ir.actions.act_window.view' id= 'tra_utilidad_tree'>
+      <field eval = '1' name = 'sequence'/>
+      <field name = 'view_mode'>tree</field>
+      <field name = 'view_id' ref = 'tra_Utilidad_tree'/>
+      <field name = 'act_window_id' ref = 'tra_utilidad_action'/>
     </record>
     <!-- FORM -->
-    <record model = 'ir.actions.act_window.view' id= 'tra_gasto_ind_fabricacion_form'>
-      <field eval = '0' name = 'sequence'/>
+    <record model = 'ir.actions.act_window.view' id= 'tra_utilidad_form'>
+      <field eval = '2' name = 'sequence'/>
       <field name = 'view_mode'>form</field>
-      <field name = 'view_id' ref = 'tra_GastoIndFabricacion_form'/>
-      <field name = 'act_window_id' ref = 'tra_gasto_ind_fabricacion_action'/>
+      <field name = 'view_id' ref = 'tra_Utilidad_form'/>
+      <field name = 'act_window_id' ref = 'tra_utilidad_action'/>
     </record>
 
     <!-- ********************************
@@ -162,6 +183,54 @@
       <field name = 'view_mode'>form</field>
       <field name = 'view_id' ref = 'tra_MateriaForro_form'/>
       <field name = 'act_window_id' ref = 'tra_materia_forro_action'/>
+    </record>
+
+    <!-- ********************************
+      Actions para Modelo tra_GastoVenta
+    **********************************-->
+    <record model = 'ir.actions.act_window' id ='tra_gasto_venta_action'>
+      <field name = 'name'>GastoVenta</field>
+      <field name = 'res_model'>tra.gasto.venta</field>
+      <field name = 'view_mode'>form</field>
+    </record>
+    <!-- FORM -->
+    <record model = 'ir.actions.act_window.view' id= 'tra_gasto_venta_form'>
+      <field eval = '0' name = 'sequence'/>
+      <field name = 'view_mode'>form</field>
+      <field name = 'view_id' ref = 'tra_GastoVenta_form'/>
+      <field name = 'act_window_id' ref = 'tra_gasto_venta_action'/>
+    </record>
+
+    <!-- ********************************
+      Actions para Modelo tra_GastoAdmin
+    **********************************-->
+    <record model = 'ir.actions.act_window' id ='tra_gasto_admin_action'>
+      <field name = 'name'>GastoAdmin</field>
+      <field name = 'res_model'>tra.gasto.admin</field>
+      <field name = 'view_mode'>form</field>
+    </record>
+    <!-- FORM -->
+    <record model = 'ir.actions.act_window.view' id= 'tra_gasto_admin_form'>
+      <field eval = '0' name = 'sequence'/>
+      <field name = 'view_mode'>form</field>
+      <field name = 'view_id' ref = 'tra_GastoAdmin_form'/>
+      <field name = 'act_window_id' ref = 'tra_gasto_admin_action'/>
+    </record>
+
+    <!-- ********************************
+      Actions para Modelo tra_GastoIndFabricacion
+    **********************************-->
+    <record model = 'ir.actions.act_window' id ='tra_gasto_ind_fabricacion_action'>
+      <field name = 'name'>GastoIndFabricacion</field>
+      <field name = 'res_model'>tra.gasto.ind.fabricacion</field>
+      <field name = 'view_mode'>form</field>
+    </record>
+    <!-- FORM -->
+    <record model = 'ir.actions.act_window.view' id= 'tra_gasto_ind_fabricacion_form'>
+      <field eval = '0' name = 'sequence'/>
+      <field name = 'view_mode'>form</field>
+      <field name = 'view_id' ref = 'tra_GastoIndFabricacion_form'/>
+      <field name = 'act_window_id' ref = 'tra_gasto_ind_fabricacion_action'/>
     </record>
 
   </data>

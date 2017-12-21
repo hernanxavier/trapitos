@@ -14,6 +14,17 @@ from odoo import models, fields, api
 #     def _value_pc(self):
 #         self.value2 = float(self.value) / 100
 
+class tra_ManoObraDirecta(models.Model):
+    # Agrega campos al modulo de empleados
+    _inherit = 'hr.employee'
+    sueldo_fijo = fields.Float('Sueldo Mensual ($)')
+    valor_iess = fields.Float('Aprote al IESS (%)')
+    valor_horas_extra = fields.Float ('Horas Extras ($)')
+    valor_bonos = fields.Float('Premios/Incentivos ($)')
+    costo_minuto_mod = fields.Float ('Costo M.O. Directa ($)')
+    proyeccion_incremento = fields.Float (u'Proyección Incremento')
+
+
 class tra_ColorTela (models.Model):
     _name = 'tra.color.tela'
     _description = 'Registra los colores posibles para las telas'
@@ -52,7 +63,89 @@ class tra_Talla(models.Model):
         ('unique_name', 'unique(name)', 'Esta talla ya existe'),
     ]
     name = fields.Char('Nombre', size = 100, required = True)
-    observacion = fields.Text ('Observaciones', size = 200 , required = False)
+    observacion = fields.Text('Observaciones', size = 200 , required = False)
+
+class tra_TiempoTrabajo(models.Model):
+    _name = 'tra.tiempo.trabajo'
+    _description = 'Registra el tiempo de descanso y dias laborables de una jornada laboral'
+    _order = 'name'
+
+    _sql_constraints =[
+        ('unique_name', 'unique(name)', 'El nombre de la jornada ya existe'),
+        ('unique_codigo', 'unique(codigo)', u'El código de la jornada ya existe'),
+    ]
+    name = fields.Char('Nombre Jornada', size = 100, required = True)
+    codigo = fields.Char (u'Código', size = 3, required = True)
+    jornada_horas = fields.Float ('Horas Laborales', size = 10, required = True)
+    descanso_horas = fields.Float('Horas de descanso', size = 10, required = True)
+    dia_laborables_anio = fields.Float(u'Dias laborables (Año)', size = 3, required = True)
+    observacion = fields.Text('Observacion', required = False)
+
+class tra_FormaPago(models.Model):
+    _name = 'tra.forma.pago'
+    _description = 'Registra las diferentes formas de pago para los clientes'
+
+    _sql_constraints =[
+        ('unique_name', 'unique(name)', 'El nombre de la jornada ya existe'),
+        ('unique_codigo', 'unique(codigo)', u'El código de la jornada ya existe'),
+    ]
+    name = fields.Char('Nombre', size = 100, required = True)
+    codigo = fields.Char ('Nombre', size = 6, required = True)
+    recargo = fields.Float('Regargo', size = 9, required = True)
+    observacion = fields.Text(u'Observación', required = False)
+
+class tra_Utilidad(models.Model):
+    _name = 'tra.utilidad'
+    _description = 'Registra valores de utilidades aplicadas de acuerdo a las unidades compradas o a la forma de pago'
+
+    _sql_constraints =[
+        ('unique_name', 'unique(name)', 'El nombre de la jornada ya existe'),
+        ('unique_codigo', 'unique(codigo)', u'El código de la jornada ya existe'),
+    ]
+    name = fields.Char('Nombre', size = 100, required = True)
+    codigo = fields.Char('Codigo', size = 6, required = True)
+    num_unidades = fields.Float('Num. Unidades', size = 6, required = True)
+    porcentaje = fields.Float('Porcentaje Utilidad', size = 3, required = True)
+    observacion = fields.Text (u'Observación', required = False)
+
+class tra_MateriaExtra(models.Model):
+    _name = 'tra.materia.extra'
+    _description = 'Registra los materiales extras que tiene una prenda textil, asi como sus costos'
+
+    _sql_constraints =[
+        ('unique_name', 'unique(name)', 'El nombre de la jornada ya existe'),
+        ('unique_codigo', 'unique(codigo)', u'El código de la jornada ya existe'),
+    ]
+
+    name = fields.Char ('Nombre del material', size = 100, required = True)
+    codigo = fields.Char (u'Código de producto', size = 9, required = True)
+    costo = fields.Float ('Costo', size = 11, required = True)
+    iva = fields.Float ('IVA(%)', size = 4, required = True)
+    valor_total = fields.Float ('Total', size = 9, required = True)
+    observacion = fields.Text ('Observaciones', required = False)
+
+class tra_MateriaForro(models.Model):
+    _name = 'tra.materia.forro'
+    _description = 'Registra el material que una prenda textil puede requerir'
+
+    _sql_constraints =[
+        ('unique_name', 'unique(name)', 'El nombre de la jornada ya existe'),
+        ('unique_codigo', 'unique(codigo)', u'El código de la jornada ya existe'),
+    ]
+
+    name = fields.Char('Nombre', required = True)
+    codigo = fields.Char('Codigo de forro', required = True)
+    tela_id = fields.Many2one ('tra.tela', 'Tela', required = True)
+    largo_frente = fields.Float ('Largo de Frente', size = 6, required = True)
+    ancho_frente = fields.Float ('Ancho de Frente', size = 6, required = True)
+    largo_espalda = fields.Float ('Largo de Espalda', size = 6, required = True)
+    ancho_espalda = fields.Float ('Ancho de Espalda', size = 6, required = True)
+    largo_manga = fields.Float ('Largo de Manga', size = 6, required = True)
+    ancho_manga = fields.Float ('Ancho de Manga', size = 6, required = True)
+    scrap = fields.Float ('SCRAP', size = 6, required = True)
+    largo_manga_extra = fields.Float ('Largo de Manga Extra', size = 6, required = True)
+    cantidad_tela_extra = fields.Float ('Cantidad de tela extra', size = 6, required = True)
+    observacion = fields.Text ('Observaciones', required = False)
 
 class tra_GastoVenta(models.Model):
     _name = 'tra.gasto.venta'
@@ -89,33 +182,4 @@ class tra_GastoIndFabricacion(models.Model):
     servicios_basicos = fields.Float (u'Servicios básicos', size = 11, required = True)
     mano_obra_indirecta = fields.Float (u'Mano de obra indirecta', size = 11, required = True)
     venta_anual = fields.Float ('Ventas Anuales', size = 11, required = True)
-    observacion = fields.Text ('Observaciones', required = False)
-
-class tra_MateriaExtra(models.Model):
-    _name = 'tra.materia.extra'
-    _description = 'Registra los materiales extras que tiene una prenda textil, asi como sus costos'
-
-    name = fields.Char ('Nombre del material', size = 100, required = True)
-    codigo = fields.Char (u'Código de producto', size = 9, required = True)
-    costo = fields.Float ('Costo', size = 11, required = True)
-    iva = fields.Float ('IVA(%)', size = 4, required = True)
-    valor_total = fields.Float ('Total', size = 9, required = True)
-    observacion = fields.Text ('Observaciones', required = False)
-
-class tra_MateriaForro(models.Model):
-    _name = 'tra.materia.forro'
-    _description = 'Registra el material que una prenda textil puede requerir'
-
-    name = fields.Char('Nombre', required = True)
-    codigo = fields.Char('Codigo de forro', required = True)
-    tela_id = fields.Many2one ('tra.tela', 'Tela', required = True)
-    largo_frente = fields.Float ('Largo de Frente', size = 6, required = True)
-    ancho_frente = fields.Float ('Ancho de Frente', size = 6, required = True)
-    largo_espalda = fields.Float ('Largo de Espalda', size = 6, required = True)
-    ancho_espalda = fields.Float ('Ancho de Espalda', size = 6, required = True)
-    largo_manga = fields.Float ('Largo de Manga', size = 6, required = True)
-    ancho_manga = fields.Float ('Ancho de Manga', size = 6, required = True)
-    scrap = fields.Float ('SCRAP', size = 6, required = True)
-    largo_manga_extra = fields.Float ('Largo de Manga Extra', size = 6, required = True)
-    cantidad_tela_extra = fields.Float ('Cantidad de tela extra', size = 6, required = True)
     observacion = fields.Text ('Observaciones', required = False)

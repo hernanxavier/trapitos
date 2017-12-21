@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
   <data>
+
+    <!-- **************************************
+      Vistas para el modelo hr.EMPLOYEE
+    ****************************************-->
+    <!-- Para agregar campos a la pestaña RRHH de empleados -->
+    <record id="view_form_rh_employee_inherited" model= "ir.ui.view">
+      <field name="name">view.form.rh.employee.inherited</field>
+      <field name="model">hr.employee</field>
+      <field name="inherit_id" ref="hr.view_employee_form"/>
+      <field name="arch" type="xml">
+        <!-- ...match and extend elements here! ... -->
+        <group name="active_group" position = "after">
+          <group string='Costes' name="coste_empleado">
+            <field name="sueldo_fijo"/>
+            <field name="valor_iess"/>
+            <field name="valor_horas_extra"/>
+            <field name="valor_bonos"/>
+            <field name="costo_minuto_mod"/>
+            <field name="proyeccion_incremento"/>
+          </group>
+        </group>
+      </field>
+    </record>
+
+
     <!-- **************************************
       Vistas para el modelo tra_ColorTela
     ****************************************-->
@@ -26,9 +51,9 @@
       <field name = 'model'>tra.color.tela</field>
       <field name = 'arch' type = 'xml'>
         <tree>
-            <field name = 'name' />
-            <field name = 'codigo' />
-            <field name = 'observacion' />
+            <field name = 'name'/>
+            <field name = 'codigo'/>
+            <field name = 'observacion'/>
         </tree>
       </field>
     </record>
@@ -39,8 +64,8 @@
       <field name = 'model'>tra.color.tela</field>
       <field name = 'arch' type = 'xml'>
         <search>
-          <field name = 'name' />
-          <field name = 'codigo' />
+          <field name = 'name'/>
+          <field name = 'codigo'/>
         </search>
       </field>
     </record>
@@ -73,12 +98,12 @@
       <field name = 'model'>tra.tela</field>
       <field name = "arch" type = 'xml'>
         <tree>
-            <field name = 'name' />
-            <field name = 'codigo' />
-            <field name = 'ancho' />
-            <field name = 'color_id' />
-            <field name = 'costo' />
-            <field name = 'observacion' />
+            <field name = 'name'/>
+            <field name = 'codigo'/>
+            <field name = 'ancho'/>
+            <field name = 'color_id'/>
+            <field name = 'costo'/>
+            <field name = 'observacion'/>
         </tree>
       </field>
     </record>
@@ -89,11 +114,11 @@
       <field name = 'model'>tra.tela</field>
       <field name = 'arch' type = 'xml'>
         <search>
-          <field name = 'name' />
-          <field name = 'codigo' />
-          <field name = 'ancho' />
-          <field name = 'color_id' />
-          <field name = 'costo' />
+          <field name = 'name'/>
+          <field name = 'codigo'/>
+          <field name = 'ancho'/>
+          <field name = 'color_id'/>
+          <field name = 'costo'/>
         </search>
       </field>
     </record>
@@ -121,29 +146,27 @@
       <field name = 'model'>tra.talla</field>
       <field name = 'arch' type = 'xml'>
         <tree>
-            <field name = 'name' />
-            <field name = 'observacion' />
+            <field name = 'name'/>
+            <field name = 'observacion'/>
         </tree>
       </field>
     </record>
 
     <!-- **************************************
-      Vistas para el modelo tra_GastoVenta
+      Vistas para el modelo tra_TIEMPO TRABAJO
     ****************************************-->
     <!-- Vista FORM -->
-    <record model = 'ir.ui.view' id = 'tra_GastoVenta_form'>
-      <field name = 'model'>tra.gasto.venta</field>
-      <field name = 'arch' type = 'xml'>
+    <record model = 'ir.ui.view' id = 'tra_TiempoTrabajo_form'>
+      <field name = 'model'>tra.tiempo.trabajo</field>
+      <field name = 'arch' type = "xml">
         <form>
           <sheet>
             <group>
-              <field name = 'fecha' placeholder = 'Fecha cierre de periodo'/>
-              <field name = 'gastos_ventas' placeholder = 'Total Gastos Ventas Anuales' />
-              <field name = 'gastos_viajes' placeholder = 'Total Gastos Viajes Anuales' />
-              <field name = 'gastos_operacion' placeholder = 'Total Gastos Operacionales' />
-              <field name = 'gastos_varios' placeholder = 'Total Gastos Varios' />
-              <field name = 'servicios_basicos' placeholder = 'Total Gastos S. Básicos' />
-              <field name = 'venta_anual' placeholder = 'Total Venta Anual' />
+              <field name = 'name' placeholder = 'Nombre de la jornada'/>
+              <field name = 'codigo' placeholder = 'Cree un codigo'/>
+              <field name = 'jornada_horas' placeholder = 'Horas de jornada laboral'/>
+              <field name = 'descanso_horas' placeholder = 'Horas diarias de descanso'/>
+              <field name = 'dia_laborables_anio' placeholder = 'Dias laborables al año'/>
               <field name = 'observacion' placeholder = 'Ingrese un texto'/>
             </group>
           </sheet>
@@ -151,23 +174,32 @@
       </field>
     </record>
 
+    <!-- Vista TREE -->
+    <record model = 'ir.ui.view' id = 'tra_TiempoTrabajo_tree'>
+      <field name = 'model'>tra.tiempo.trabajo</field>
+      <field name = 'arch' type = 'xml'>
+        <tree>
+            <field name = 'name'/>
+            <field name = 'codigo'/>
+            <field name = 'jornada_horas'/>
+            <field name = 'observacion'/>
+        </tree>
+      </field>
+    </record>
+
     <!-- **************************************
-      Vistas para el modelo tra_GastoAdmin
+      Vistas para el modelo tra_FORMA PAGO
     ****************************************-->
     <!-- Vista FORM -->
-    <record model = 'ir.ui.view' id = 'tra_GastoAdmin_form'>
-      <field name = 'model'>tra.gasto.admin</field>
-      <field name = 'arch' type = 'xml'>
+    <record model = 'ir.ui.view' id = 'tra_FormaPago_form'>
+      <field name = 'model'>tra.forma.pago</field>
+      <field name = 'arch' type = "xml">
         <form>
           <sheet>
             <group>
-              <field name = 'fecha' placeholder = 'Fecha cierre de periodo'/>
-              <field name = 'gastos_admin' placeholder = 'Total Gastos Ventas Anuales' />
-              <field name = 'gastos_operacion' placeholder = 'Total Gastos Operacionales' />
-              <field name = 'gastos_varios' placeholder = 'Total Gastos Varios' />
-              <field name = 'mantenimiento' placeholder = 'Total Gastos S. Básicos' />
-              <field name = 'egresos_no_operativos' placeholder = 'Total Gastos S. Básicos' />
-              <field name = 'venta_anual' placeholder = 'Total Venta Anual' />
+              <field name = 'name' placeholder = 'Nombre de la forma de pago'/>
+              <field name = 'codigo' placeholder = 'Cree un codigo'/>
+              <field name = 'recargo' placeholder = 'Porcentaje de recargo'/>
               <field name = 'observacion' placeholder = 'Ingrese un texto'/>
             </group>
           </sheet>
@@ -175,25 +207,51 @@
       </field>
     </record>
 
+    <!-- Vista TREE -->
+    <record model = 'ir.ui.view' id = 'tra_FormaPago_tree'>
+      <field name = 'model'>tra.forma.pago</field>
+      <field name = 'arch' type = 'xml'>
+        <tree>
+            <field name = 'name'/>
+            <field name = 'codigo'/>
+            <field name = 'recargo'/>
+            <field name = 'observacion'/>
+        </tree>
+      </field>
+    </record>
+
     <!-- **************************************
-      Vistas para el modelo tra_GastoIndFabricacion
+      Vistas para el modelo tra_UTILIDAD
     ****************************************-->
     <!-- Vista FORM -->
-    <record model = 'ir.ui.view' id = 'tra_GastoIndFabricacion_form'>
-      <field name = 'model'>tra.gasto.ind.fabricacion</field>
-      <field name = 'arch' type = 'xml'>
+    <record model = 'ir.ui.view' id = 'tra_Utilidad_form'>
+      <field name = 'model'>tra.utilidad</field>
+      <field name = 'arch' type = "xml">
         <form>
           <sheet>
             <group>
-              <field name = 'fecha' placeholder = 'Fecha cierre de periodo'/>
-              <field name = 'gastos_produccion' placeholder = 'Total gastos de producción' />
-              <field name = 'servicios_basicos' placeholder = 'Gastos básicos anuales' />
-              <field name = 'mano_obra_indirecta' placeholder = 'Total valor de mano de obra indirecta' />
-              <field name = 'venta_anual' placeholder = 'Total Venta Anual' />
+              <field name = 'name' placeholder = 'Nombre'/>
+              <field name = 'codigo' placeholder = 'Cree un codigo'/>
+              <field name = 'num_unidades' placeholder = 'Número de unidades'/>
+              <field name = 'porcentaje' placeholder = 'Porcentaje utilidad'/>
               <field name = 'observacion' placeholder = 'Ingrese un texto'/>
             </group>
           </sheet>
         </form>
+      </field>
+    </record>
+
+    <!-- Vista TREE -->
+    <record model = 'ir.ui.view' id = 'tra_Utilidad_tree'>
+      <field name = 'model'>tra.utilidad</field>
+      <field name = 'arch' type = 'xml'>
+        <tree>
+            <field name = 'name'/>
+            <field name = 'codigo'/>
+            <field name = 'num_unidades'/>
+            <field name = 'porcentaje'/>
+            <field name = 'observacion'/>
+        </tree>
       </field>
     </record>
 
@@ -269,7 +327,79 @@
       </field>
     </record>
 
-    
+    <!-- **************************************
+      Vistas para el modelo tra_GastoVenta
+    ****************************************-->
+    <!-- Vista FORM -->
+    <record model = 'ir.ui.view' id = 'tra_GastoVenta_form'>
+      <field name = 'model'>tra.gasto.venta</field>
+      <field name = 'arch' type = 'xml'>
+        <form>
+          <sheet>
+            <group>
+              <field name = 'fecha' placeholder = 'Fecha cierre de periodo'/>
+              <field name = 'gastos_ventas' placeholder = 'Total Gastos Ventas Anuales' />
+              <field name = 'gastos_viajes' placeholder = 'Total Gastos Viajes Anuales' />
+              <field name = 'gastos_operacion' placeholder = 'Total Gastos Operacionales' />
+              <field name = 'gastos_varios' placeholder = 'Total Gastos Varios' />
+              <field name = 'servicios_basicos' placeholder = 'Total Gastos S. Básicos' />
+              <field name = 'venta_anual' placeholder = 'Total Venta Anual' />
+              <field name = 'observacion' placeholder = 'Ingrese un texto'/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- **************************************
+      Vistas para el modelo tra_GastoAdmin
+    ****************************************-->
+    <!-- Vista FORM -->
+    <record model = 'ir.ui.view' id = 'tra_GastoAdmin_form'>
+      <field name = 'model'>tra.gasto.admin</field>
+      <field name = 'arch' type = 'xml'>
+        <form>
+          <sheet>
+            <group>
+              <field name = 'fecha' placeholder = 'Fecha cierre de periodo'/>
+              <field name = 'gastos_admin' placeholder = 'Total Gastos Ventas Anuales' />
+              <field name = 'gastos_operacion' placeholder = 'Total Gastos Operacionales' />
+              <field name = 'gastos_varios' placeholder = 'Total Gastos Varios' />
+              <field name = 'mantenimiento' placeholder = 'Total Gastos S. Básicos' />
+              <field name = 'egresos_no_operativos' placeholder = 'Total Gastos S. Básicos' />
+              <field name = 'venta_anual' placeholder = 'Total Venta Anual' />
+              <field name = 'observacion' placeholder = 'Ingrese un texto'/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- **************************************
+      Vistas para el modelo tra_GastoIndFabricacion
+    ****************************************-->
+    <!-- Vista FORM -->
+    <record model = 'ir.ui.view' id = 'tra_GastoIndFabricacion_form'>
+      <field name = 'model'>tra.gasto.ind.fabricacion</field>
+      <field name = 'arch' type = 'xml'>
+        <form>
+          <sheet>
+            <group>
+              <field name = 'fecha' placeholder = 'Fecha cierre de periodo'/>
+              <field name = 'gastos_produccion' placeholder = 'Total gastos de producción' />
+              <field name = 'servicios_basicos' placeholder = 'Gastos básicos anuales' />
+              <field name = 'mano_obra_indirecta' placeholder = 'Total valor de mano de obra indirecta' />
+              <field name = 'venta_anual' placeholder = 'Total Venta Anual' />
+              <field name = 'observacion' placeholder = 'Ingrese un texto'/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+
+
 
 
 

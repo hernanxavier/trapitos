@@ -7,8 +7,11 @@
     <menuitem id = 'menu_base_talla' action = 'tra_talla_action' name = 'Tallas' parent = 'menu_base_root' sequence = '3'/>
     <menuitem id = 'menu_base_materia_extra' action = 'tra_materia_extra_action' name = 'Materia Prima Extra' parent = 'menu_base_root' sequence = '4'/>
     <menuitem id = 'menu_base_materia_forro' action = 'tra_materia_forro_action' name = 'Materia Prima Forro' parent = 'menu_base_root' sequence = '5'/>
-    <menuitem id = 'menu_base_gasto_venta' action = 'tra_gasto_venta_action' name = 'Gastos Ventas' parent = 'menu_base_root' sequence = '6'/>
-    <menuitem id = 'menu_base_gasto_admin' action = 'tra_gasto_admin_action' name = 'Gastos Administrativos' parent = 'menu_base_root' sequence = '7'/>
-    <menuitem id = 'menu_base_gasto_ind_fabricacion' action = 'tra_gasto_ind_fabricacion_action' name = 'Gastos indirectos fabricación' parent = 'menu_base_root' sequence = '8'/>
+    <menuitem id = 'menu_base_tiempo_trabajo' action = 'tra_tiempo_trabajo_action' name = 'Jornadas Loborales' parent = 'menu_base_root' sequence = '6'/>
+    <menuitem id = 'menu_base_forma_pago' action = 'tra_forma_pago_action' name = 'Formas de pago' parent = 'menu_base_root' sequence = '7'/>
+    <menuitem id = 'menu_base_utilidad' action = 'tra_utilidad_action' name = 'Utilidad' parent = 'menu_base_root' sequence = '8'/>
+    <menuitem id = 'menu_base_gasto_venta' action = 'tra_gasto_venta_action' name = 'Gastos Ventas' parent = 'menu_base_root' sequence = '9'/>
+    <menuitem id = 'menu_base_gasto_admin' action = 'tra_gasto_admin_action' name = 'Gastos Administrativos' parent = 'menu_base_root' sequence = '10'/>
+    <menuitem id = 'menu_base_gasto_ind_fabricacion' action = 'tra_gasto_ind_fabricacion_action' name = 'Gastos indirectos fabricación' parent = 'menu_base_root' sequence = '11'/>
   </data>
 </odoo>
