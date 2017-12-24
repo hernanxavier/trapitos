@@ -153,14 +153,21 @@ class tra_Accesorio(models.Model):
     observacion = fields.Text ('Observaciones', required = False)
 
 class tra_MateriaForro(models.Model):
+
     @api.one
+    @api.depends('largo_frente', 'largo_manga', 'scrap', 'largo_manga_extra')
     def _get_largo_total (self):
         # Calcula el campo largo total
         try:
+            a = self.largo_frente + self.largo_manga + self.scrap + self.largo_manga_extra
+            print (a)
             self.largo_total = self.largo_frente + self.largo_manga + self.scrap + self.largo_manga_extra
+
         except:
             raise 'Datos incorrectos'
 
+    @api.one
+    @api.depends('ancho_frente', 'ancho_espalda')
     def _get_ancho_total (self):
         # Calcula el ancho total del Forro
         try:
@@ -168,22 +175,28 @@ class tra_MateriaForro(models.Model):
         except:
             raise 'Datos incorrectos'
 
+    @api.one
+    @api.depends('ancho_tela_id', 'ancho_total')
     def _get_piezas_reales (self):
         # Calcula el numero de piezas reales que salen de la tela escogida
         import math
         try:
-            piezas = self.ancho_tela_id / self.ancho_total
-
+            if self.ancho_total > 0:
+                piezas = self.ancho_tela_id / self.ancho_total
+            else:
+                piezas = 0
             t = math.modf(piezas) # math.modf(Decimal) esto devuelve una tupla con la parte decimal y en la posicion 1 la parte entera
             if t[0] >= 0.50: # Si la aparte decimal es mayor a 0,50 entonces baja a 0,50
                 piezas= t[1] + 0.50
             else: # Si es menor entonces solamente queda la parte entera
                 piezas = t[1]
-
             self.piezas_reales = piezas
         except:
+            self.piezas_reales = 0
             raise 'Datos incorrectos'
 
+    @api.one
+    @api.depends('piezas_reales', 'largo_total')
     def _get_tela_utilizada (self):
         #Calcula la cantidad de tela utilizada para producir la prenda
         import math
@@ -196,6 +209,8 @@ class tra_MateriaForro(models.Model):
         except:
             raise 'Datos incorrectos'
 
+    @api.one
+    @api.depends('largo_total', 'costo_tela_id', 'piezas_reales')
     def _get_costo_tela_cuerpo (self):
         #Calcula el costo de tela utilizada en el cuerpo de la prenda
         import math
@@ -208,6 +223,8 @@ class tra_MateriaForro(models.Model):
         except:
             raise 'Datos incorrectos'
 
+    @api.one
+    @api.depends('costo_tela_id', 'cantidad_tela_extra')
     def _get_costo_tela_extra (self):
         # Calcula el costo de tela extra utilizada en la prenda
         import math
@@ -216,6 +233,8 @@ class tra_MateriaForro(models.Model):
         except:
             raise 'Datos incorrectos'
 
+    @api.one
+    @api.depends('accesorio_ids', 'accesorio_ids.valor_total')
     def _get_costo_accesorios (self):
         # Suma el costo de los diferentes accesorios extras
         suma_costos = 0
@@ -223,20 +242,29 @@ class tra_MateriaForro(models.Model):
             suma_costos += costo.valor_total
         self.costo_accesorios = suma_costos
 
+    @api.one
+    @api.depends('tela_utilizada', 'cantidad_tela_extra')
     def _get_total_tela_utilizada (self):
         # Suma la cantidad de tela utilizada en el cuepro de laprenda y la cantidad extra
         self.total_tela_utilizada = self.tela_utilizada + self.cantidad_tela_extra
 
+
+    @api.one
+    @api.depends ('costo_tela_extra', 'costo_tela_cuerpo', 'costo_accesorios')
     def _get_costo_total(self):
-        # Calcula el costo total de la tela utilizada para la prenta textil
+    # Calcula el costo total de la tela utilizada para la prenta textil
         self.costo_total = self.costo_tela_extra + self.costo_tela_cuerpo + self.costo_accesorios
 
+    @api.onchange('talla_id')
+    def _get_nombre_forro(self):
+        self.name += ' T' + self.talla_id.name
+
     _name = 'tra.materia.forro'
-    _description = 'Registra el material que una prenda textil puede requerir'
+    _description = 'Registra el material que el forro de una prenda textil requiere'
 
     _sql_constraints =[
-        ('unique_name', 'unique(name)', 'El nombre de la jornada ya existe'),
-        ('unique_codigo', 'unique(codigo)', u'El código de la jornada ya existe'),
+        ('unique_name', 'unique(name)', 'El nombre del forro ya existe'),
+        ('unique_codigo', 'unique(codigo)', u'El código para el forro ya existe'),
     ]
     name = fields.Char('Nombre', required = True)
     codigo = fields.Char('Codigo de forro', required = True)
@@ -259,15 +287,15 @@ class tra_MateriaForro(models.Model):
     accesorio_ids = fields.Many2many('tra.accesorio', 'tra_forro_accesorio', 'forro_id', 'accesorio_id', string = 'Accesorios Extra')
 
     # Campos Calculados
-    largo_total = fields.Float(compute = '_get_largo_total', string = 'Largo Total')
-    ancho_total = fields.Float(compute = '_get_ancho_total', string = 'Ancho Total')
-    piezas_reales = fields.Float(compute = '_get_piezas_reales', string = 'Nro. Piezas')
-    tela_utilizada = fields.Float(compute = '_get_tela_utilizada', string = 'Tela Utilizada (Cuerpo)')
-    costo_tela_cuerpo = fields.Float(compute = '_get_costo_tela_cuerpo', string = 'Costo Tela')
-    costo_tela_extra = fields.Float(compute = '_get_costo_tela_extra', string = 'Costo Tela Extra')
-    costo_accesorios = fields.Float(compute = '_get_costo_accesorios', string = 'Costo Accesorios Extras')
-    total_tela_utilizada = fields.Float(compute = '_get_total_tela_utilizada', string = 'Total Tela Utilizada (Cuerpo + Extra)')
-    costo_total = fields.Float(compute = '_get_costo_total', string = 'Costo Total')
+    largo_total = fields.Float(compute = '_get_largo_total', string = 'Largo Total', store = True)
+    ancho_total = fields.Float(compute = '_get_ancho_total', string = 'Ancho Total', store = True)
+    piezas_reales = fields.Float(compute = '_get_piezas_reales', string = 'Nro. Piezas', store = True)
+    tela_utilizada = fields.Float(compute = '_get_tela_utilizada', string = 'Tela Utilizada (Cuerpo)', store = True)
+    costo_tela_cuerpo = fields.Float(compute = '_get_costo_tela_cuerpo', string = 'Costo Tela (Cuerpo)', store = True)
+    costo_tela_extra = fields.Float(compute = '_get_costo_tela_extra', string = 'Costo Tela Extra', store = True)
+    costo_accesorios = fields.Float(compute = '_get_costo_accesorios', string = 'Costo Accesorios Extras', store = True)
+    total_tela_utilizada = fields.Float(compute = '_get_total_tela_utilizada', string = 'Total Tela Utilizada (Cuerpo + Extra)', store = True)
+    costo_total = fields.Float(compute = '_get_costo_total', string = 'Costo Total', store = True)
 
 
 
