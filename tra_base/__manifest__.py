@@ -33,6 +33,8 @@
         'views/tra_base_actions.xml',
         'views/tra_base_menu.xml',
         'views/tra_base_templates.xml',
+        # 'views/tra_configuracion_base_views.xml',
+        'data/tra_gastos_config.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

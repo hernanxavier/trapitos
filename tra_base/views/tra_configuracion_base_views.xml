@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- **************************************
+    Vistas para el modelo tra_GastoVentaConfiguracion
+  ****************************************-->
+  <!-- Vista FORM -->
+
+  <record model = 'ir.ui.view' id = 'tra_GastoVenta_Configuration'>
+    <field name = 'model'>Gastos Ventas</field>
+    <field name = 'model'>tra.gasto.venta</field>
+    <field name = 'arch' type = 'xml'>
+      <form string = 'Gastos de Ventas'>
+        <header>
+          <button string= 'Guardar' type = 'object' name = 'execute' class = 'oe_highlight'/>
+          <button string= 'Descartar' type = 'object' name = 'cancel' class = 'oe_link'/>
+        </header>
+        <group>
+          <field name = 'default_fecha' placeholder = 'Fecha cierre de periodo' class="oe_inline"/>
+          <field name = 'default_gastos_ventas' placeholder = 'Total Gastos Ventas Anuales' class="oe_inline"/>
+          <field name = 'default_gastos_viajes' placeholder = 'Total Gastos Viajes Anuales' class="oe_inline"/>
+          <field name = 'default_gastos_operacion' placeholder = 'Total Gastos Operacionales' class="oe_inline"/>
+          <field name = 'default_gastos_varios' placeholder = 'Total Gastos Varios' class="oe_inline"/>
+          <field name = 'default_servicios_basicos' placeholder = 'Total Gastos S. Básicos' class="oe_inline"/>
+          <field name = 'default_venta_anual' placeholder = 'Total Venta Anual' class="oe_inline"/>
+          
+          <field name = 'default_observacion' placeholder = 'Ingrese un texto' class="oe_inline"/>
+        </group>
+      </form>
+    </field>
+  </record>
+
+
+  <record model = 'ir.actions.act_window' id ='tra_gasto_venta_configuracion'>
+    <field name = 'name'>Gastos Ventas</field>
+    <field name = 'type'>ir.actions.act_window</field>
+    <field name = 'res_model'>tra.gasto.venta</field>
+    <field name = 'view_mode'>form</field>
+    <field name = 'target'>inline</field>
+  </record>
+
+  <menuitem id = 'menu_base_configuracion' name = 'Configuraciones' parent = 'menu_base_root'/>
+  <menuitem id = 'menu_base_gasto_venta_configuracion' action = 'tra_gasto_venta_configuracion' name = 'Configuracion Gastos Ventas' parent = 'menu_base_configuracion' sequence = '1'/>
+
+</odoo>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate = '1' >
+    <!-- Crea un registro para calculo de calculo de Gastos en Ventas -->
+    <record model = 'tra.gasto.venta' id = 'tra_gasto_venta_1'>
+      <field name = 'id'>1</field>
+      <field name = 'fecha'> 12/31/2017 </field>
+      <field name = 'gastos_ventas'> 0 </field>
+      <field name = 'gastos_viajes'> 0 </field>
+      <field name = 'gastos_operacion'> 0 </field>
+      <field name = 'gastos_varios'> 0 </field>
+      <field name = 'servicios_basicos'> 0 </field>
+      <field name = 'venta_anual'> 0 </field>
+      <field name = 'observacion'> </field>
+    </record>
+
+    <!-- Crea un registro para calculo de calculo de Gastos Administrativos -->
+    <record model = 'tra.gasto.admin' id = 'tra_gasto_admin_1'>
+      <field name = 'id'>1</field>
+      <field name = 'fecha'> 12/31/2017 </field>
+      <field name = 'gastos_admin'> 0 </field>
+      <field name = 'gastos_operacion'> 0 </field>
+      <field name = 'gastos_varios'> 0 </field>
+      <field name = 'mantenimiento'> 0 </field>
+      <field name = 'egresos_no_operativos'> 0 </field>
+      <field name = 'venta_anual'> 0 </field>
+      <field name = 'observacion'> </field>
+    </record>
+
+    <!-- Crea un registro para calculo de calculo de Gastos Indirectos de Fabricación -->
+    <record model = 'tra.gasto.ind.fabricacion' id = 'tra_gasto_ind_fabricacion_1'>
+      <field name = 'id'>1</field>
+      <field name = 'fecha'> 12/31/2017 </field>
+      <field name = 'gastos_produccion'> 0 </field>
+      <field name = 'servicios_basicos'> 0 </field>
+      <field name = 'mano_obra_indirecta'> 0 </field>
+      <field name = 'venta_anual'> 0 </field>
+      <field name = 'observacion'> </field>
+    </record>
+
+    <!-- Crea un registro unico para el ingreso y calculo de la jornada de trabajo y minutos persona -->
+    <record model = 'tra.tiempo.trabajo' id = 'tra_tiempo_trabajo_1'>
+      <field name = 'id'>1</field>
+      <field name = 'name'>Jornada Laboral</field>
+      <field name = 'jornada_horas'>0</field>
+      <field name = 'descanso_minutos'>0</field>
+      <field name = 'dia_laborables_anio'>0</field>
+      <field name = 'minutos_producidos_anio'>0</field>
+      <field name = 'proyeccion_incremento'>0</field>
+      <field name = 'observacion'> </field>
+    </record>
+
+    <!-- Crea un registro unico para el ingreso y calculo de Mano de Obra Directa (MOD) -->
+    <record model = 'tra.mano.obra.directa' id = 'tra_mano_obra_directa_1'>
+      <field name = 'id'>1</field>
+      <field name = 'name'>Jornada Laboral</field>
+      <field name = 'observacion'> </field>
+    </record>
+
+  </data>
+</odoo>
