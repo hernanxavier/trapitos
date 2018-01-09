@@ -263,7 +263,7 @@
           <sheet>
             <group>
               <!-- <field name = 'name' placeholder = 'Nombre'  /> -->
-              <field name = 'tiempo_trabajo_id' invisible = '1'/>
+              <field name = 'tiempo_trabajo_id' force_save = '1' readonly = '1'/>
               <field name = 'jornada_diaria_min_id' readonly = '1'/>
               <field name = 'dia_laborables_anio_id' readonly = '1'/>
               <field name = 'minutos_persona_anual_id' readonly = '1'/>

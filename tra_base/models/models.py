@@ -200,7 +200,6 @@ class tra_Prenda(models.Model):
     observacion = fields.Text(u'Observación', required = False)
 
 class tra_ManoObraDirecta(models.Model):
-
     @api.multi
     @api.depends('personal_ids', 'observacion')
     @api.onchange('personal_ids', 'observacion')
@@ -217,7 +216,6 @@ class tra_ManoObraDirecta(models.Model):
             for persona in i.personal_ids:
                 contador += 1
             i.numero_personal = contador
-
 
     @api.multi
     @api.depends ('personal_ids')
