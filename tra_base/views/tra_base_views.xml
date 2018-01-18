@@ -3,6 +3,25 @@
   <data>
 
     <!-- **************************************
+      Vistas para el modelo product.template
+    ****************************************-->
+    <!-- Para agregar campos a la pestaña RRHH de empleados -->
+    <record id="view_form_product_template_inherited" model= "ir.ui.view">
+      <field name="name">view.form.product.template.inherited</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_only_form_view"/>
+      <field name="arch" type="xml">
+        <!-- ...match and extend elements here! ... -->
+        <group name="group_general" position = "after">
+          <group string='Proforma' name="Proforma">
+            <field name="name"/>
+            <field name="cliente_id"/>
+          </group>
+        </group>
+      </field>
+    </record>
+
+    <!-- **************************************
       Vistas para el modelo hr.EMPLOYEE
     ****************************************-->
     <!-- Para agregar campos a la pestaña RRHH de empleados -->
@@ -18,10 +37,10 @@
             <field name="valor_iess"/>
             <field name="valor_horas_extra"/>
             <field name="valor_bonos"/>
-            <field name="total_sueldo_fijo"/>
-            <field name="total_sueldo_variable"/>
-            <field name="total_sueldo"/>
-            <field name="tasa_empleado"/>
+            <field name="total_sueldo_fijo" force_save = '1'/>
+            <field name="total_sueldo_variable" force_save = '1'/>
+            <field name="total_sueldo" force_save = '1'/>
+            <field name="tasa_empleado" force_save = '1'/>
           </group>
         </group>
       </field>
@@ -30,7 +49,6 @@
     <!-- **************************************
       Vistas para el modelo tra_ColorTela
     ****************************************-->
-
     <!-- Vista FORM -->
     <record model = 'ir.ui.view' id = 'tra_ColorTela_form'>
       <field name = 'model'>tra.color.tela</field>
@@ -74,6 +92,20 @@
     <!-- **************************************
       Vistas para el modelo tra_Tela
     ****************************************-->
+    <!-- Vista TREE -->
+    <record model = 'ir.ui.view' id = 'tra_Tela_tree'>
+      <field name = 'model'>tra.tela</field>
+      <field name = "arch" type = 'xml'>
+        <tree>
+            <field name = 'name'/>
+            <field name = 'codigo'/>
+            <field name = 'ancho'/>
+            <!-- <field name = 'color_id'/> -->
+            <field name = 'costo_total'/>
+            <field name = 'observacion'/>
+        </tree>
+      </field>
+    </record>
 
     <!-- Vista FORM -->
     <record model = "ir.ui.view" id = "tra_Tela_form">
@@ -88,26 +120,11 @@
               <!--<field name = 'color_id' placeholder = 'Elija el color para la tela'/>-->
               <field name = 'costo' placeholder = 'Costo por metro antes de impuestos'/>
               <field name = 'iva' placeholder = 'Porcentaje del IVA'/>
-              <field name = 'costo_total'/>
+              <field name = 'costo_total' force_save = '1'/>
               <field name = 'observacion' placeholder = 'Ingrese un texto'/>
             </group>
           </sheet>
         </form>
-      </field>
-    </record>
-
-    <!-- Vista TREE -->
-    <record model = 'ir.ui.view' id = 'tra_Tela_tree'>
-      <field name = 'model'>tra.tela</field>
-      <field name = "arch" type = 'xml'>
-        <tree>
-            <field name = 'name'/>
-            <field name = 'codigo'/>
-            <field name = 'ancho'/>
-            <!-- <field name = 'color_id'/> -->
-            <field name = 'costo_total'/>
-            <field name = 'observacion'/>
-        </tree>
       </field>
     </record>
 
@@ -129,6 +146,16 @@
     <!-- **************************************
       Vistas para el modelo tra_TALLA
     ****************************************-->
+    <!-- Vista TREE -->
+    <record model = 'ir.ui.view' id = 'tra_Talla_tree'>
+      <field name = 'model'>tra.talla</field>
+      <field name = 'arch' type = 'xml'>
+        <tree>
+            <field name = 'name'/>
+            <field name = 'observacion'/>
+        </tree>
+      </field>
+    </record>
 
     <!-- Vista FORM -->
     <record model = 'ir.ui.view' id = 'tra_Talla_form'>
@@ -145,20 +172,22 @@
       </field>
     </record>
 
+    <!-- **************************************
+      Vistas para el modelo tra_PRENDA
+    ****************************************-->
     <!-- Vista TREE -->
-    <record model = 'ir.ui.view' id = 'tra_Talla_tree'>
-      <field name = 'model'>tra.talla</field>
+    <record model = 'ir.ui.view' id = 'tra_Prenda_tree'>
+      <field name = 'model'>tra.prenda</field>
       <field name = 'arch' type = 'xml'>
         <tree>
             <field name = 'name'/>
+            <field name = 'tela_id'/>
+            <field name = 'talla_id'/>
+            <field name = 'codigo'/>
             <field name = 'observacion'/>
         </tree>
       </field>
     </record>
-
-    <!-- **************************************
-      Vistas para el modelo tra_PRENDA
-    ****************************************-->
 
     <!-- Vista FORM -->
     <record model = 'ir.ui.view' id = 'tra_Prenda_form'>
@@ -178,24 +207,9 @@
       </field>
     </record>
 
-    <!-- Vista TREE -->
-    <record model = 'ir.ui.view' id = 'tra_Prenda_tree'>
-      <field name = 'model'>tra.prenda</field>
-      <field name = 'arch' type = 'xml'>
-        <tree>
-            <field name = 'name'/>
-            <field name = 'tela_id'/>
-            <field name = 'talla_id'/>
-            <field name = 'codigo'/>
-            <field name = 'observacion'/>
-        </tree>
-      </field>
-    </record>
-
     <!-- **************************************
-      Vistas para el modelo tra_TIEMPO TRABAJO
+      Vistas para el modelo tra_TIEMPO_TRABAJO
     ****************************************-->
-
     <!-- Vista TREE -->
     <record model = 'ir.ui.view' id = 'tra_TiempoTrabajo_tree'>
       <field name = 'model'>tra.tiempo.trabajo</field>
@@ -224,8 +238,8 @@
               <field name = 'jornada_horas' placeholder = 'Horas de jornada laboral'/>
               <field name = 'descanso_minutos' placeholder = 'Horas diarias de descanso'/>
               <field name = 'dia_laborables_anio' placeholder = 'Dias laborables al año'/>
-              <field name = 'jornada_diaria_min' placeholder = 'Jornada diaria en Minutos'/>
-              <field name = 'minutos_persona_anual' placeholder = 'Minutos Laborables por persona al año'/>
+              <field name = 'jornada_diaria_min' placeholder = 'Jornada diaria en Minutos' force_save = '1'/>
+              <field name = 'minutos_persona_anual' placeholder = 'Minutos Laborables por persona al año' force_save = '1'/>
               <field name = 'minutos_producidos_anio' placeholder = 'Minutos producidos al año'/>
               <field name = 'proyeccion_incremento' placeholder = 'Escriba el porcentaje de proyección'/>
               <field name = 'observacion' placeholder = 'Ingrese un texto'/>
@@ -280,76 +294,20 @@
                   <field name="tasa_empleado" />
                 </tree>
               </field>
-              <field name = 'numero_personal' />
-              <field name = 'suma_total_sueldo_fijo' />
-              <field name = 'suma_total_sueldo_variable' />
-              <field name = 'suma_sueldos' />
-              <field name = 'suma_tasas' />
-              <field name = 'tasa_parcial' />
-              <field name = 'costo_minuto_mod' />
-              <field name = 'tasa_final' />
+              <field name = 'numero_personal' force_save = '1'/>
+              <field name = 'suma_total_sueldo_fijo' force_save = '1'/>
+              <field name = 'suma_total_sueldo_variable' force_save = '1'/>
+              <field name = 'suma_sueldos' force_save = '1'/>
+              <field name = 'suma_tasas' force_save = '1'/>
+              <field name = 'tasa_parcial' force_save = '1'/>
+              <field name = 'costo_minuto_mod' force_save = '1'/>
+              <field name = 'tasa_final' force_save = '1'/>
               <field name = 'observacion' placeholder = 'Ingrese un texto'/>
             </group>
           </sheet>
         </form>
       </field>
     </record>
-
-
-<!-- ###############################  BORRAR ################################################## -->
-    <record model = 'ir.ui.view' id = 'tra_Autor_tree'>
-      <field name = 'model'>tra.autor</field>
-      <field name = 'arch' type = 'xml'>
-        <tree>
-            <field name = 'name'/>
-            <field name = 'address'/>
-            <field name = 'books_ids'/>
-        </tree>
-      </field>
-    </record>
-
-    <record model = 'ir.ui.view' id = 'tra_Autor_form'>
-      <field name = 'model'>tra.autor</field>
-      <field name = 'arch' type = "xml">
-        <form>
-          <sheet>
-            <group>
-              <field name = 'name' placeholder = 'Nombre de la forma de pago'/>
-              <field name = 'address' placeholder = 'Nombre de la forma de pago'/>
-              <field name = 'books_ids'/>
-            </group>
-          </sheet>
-        </form>
-      </field>
-    </record>
-
-    <record model = 'ir.ui.view' id = 'tra_Books_tree'>
-      <field name = 'model'>tra.books</field>
-      <field name = 'arch' type = 'xml'>
-        <tree>
-            <field name = 'name'/>
-            <field name = 'autor_id'/>
-        </tree>
-      </field>
-    </record>
-
-    <record model = 'ir.ui.view' id = 'tra_Books_form'>
-      <field name = 'model'>tra.books</field>
-      <field name = 'arch' type = "xml">
-        <form>
-          <sheet>
-            <group>
-              <field name = 'name' placeholder = 'Nombre de la forma de pago'/>
-              <field name = 'autor_id'/>
-            </group>
-          </sheet>
-        </form>
-      </field>
-    </record>
-
-<!-- ################################ HASTA AQUI BORRAR ################################################# -->
-
-
 
     <!-- **************************************
       Vistas para el modelo tra_FORMA PAGO
@@ -449,7 +407,7 @@
               <field name = 'codigo' placeholder = 'Cree un código del producto'/>
               <field name = 'costo' placeholder = 'Valor del material (Sin IVA)'/>
               <field name = 'iva' placeholder = 'Valor del IVA'/>
-              <field name = 'valor_total' placeholder = 'Valor Total'/>
+              <field name = 'valor_total' placeholder = 'Valor Total' force_save = '1'/>
               <field name = 'observacion' placeholder = 'Ingrese un texto'/>
             </group>
           </sheet>
@@ -510,17 +468,17 @@
             <field name = 'accesorio_ids'/>
             <group string = 'Resultados' >
               <group string = 'Totales de Materiales'>
-                <field name = 'largo_total'/>
-                <field name = 'ancho_total'/>
-                <field name = 'tela_utilizada'/>
-                <field name = 'total_tela_utilizada'/>
-                <field name = 'piezas_reales'/>
+                <field name = 'largo_total' force_save = '1'/>
+                <field name = 'ancho_total' force_save = '1'/>
+                <field name = 'tela_utilizada' force_save = '1'/>
+                <field name = 'total_tela_utilizada' force_save = '1'/>
+                <field name = 'piezas_reales' force_save = '1'/>
               </group>
-              <group string = 'Costos Forro'>
-                <field name = 'costo_accesorios'/>
-                <field name = 'costo_tela_cuerpo'/>
-                <field name = 'costo_tela_extra'/>
-                <field name = 'costo_total'/>
+              <group string = 'Costos Forro' force_save = '1'>
+                <field name = 'costo_accesorios' force_save = '1'/>
+                <field name = 'costo_tela_cuerpo' force_save = '1'/>
+                <field name = 'costo_tela_extra' force_save = '1'/>
+                <field name = 'costo_total' force_save = '1'/>
               </group>
             </group>
           </sheet>
@@ -568,16 +526,18 @@
               </group>
               <group string = 'Cantidades a utilizar'>
                 <field name = 'ancho_extra' placeholder = 'Medida en metros'/>
+                <field name = 'factor_ancho' placeholder = 'Medida en metros'/>
                 <field name = 'largo_extra' placeholder = 'Medida en metros'/>
                 <field name = 'scrap' placeholder = 'Medida en metros'/>
               </group>
             </group>
             <group string = 'Resultados' >
               <group string = 'Costos y Totales'>
-                <field name = 'largo_total'/>
-                <field name = 'piezas_reales'/>
-                <field name = 'tela_utilizada'/>
-                <field name = 'costo_materia_extra'/>
+                <field name = 'largo_total' force_save = '1'/>
+                <field name = 'ancho_total' force_save = '1'/>
+                <field name = 'piezas_reales' force_save = '1'/>
+                <field name = 'tela_utilizada' force_save = '1'/>
+                <field name = 'costo_materia_extra' force_save = '1'/>
               </group>
             </group>
           </sheet>
@@ -589,8 +549,6 @@
     <!-- **************************************
       Vistas para el modelo tra_GastoVenta
     ****************************************-->
-    <!-- l380 239 l395 275 CI 0100658038-->
-
     <!-- TREE -->
     <record model = 'ir.ui.view' id = 'tra_GastoVenta_tree'>
       <field name = 'model'>tra.gasto.venta</field>
@@ -618,8 +576,8 @@
               <field name = 'gastos_varios' placeholder = 'Total Gastos Varios' />
               <field name = 'servicios_basicos' placeholder = 'Total Gastos S. Básicos' />
               <field name = 'venta_anual' placeholder = 'Total Venta Anual' />
-              <field name = 'total_gastos_venta' placeholder = 'Total Gastos Ventas' />
-              <field name = 'tasa_costo_ventas' placeholder = 'Tasa costo de ventas' />
+              <field name = 'total_gastos_venta' placeholder = 'Total Gastos Ventas' force_save = '1'/>
+              <field name = 'tasa_costo_ventas' placeholder = 'Tasa costo de ventas' force_save = '1'/>
               <field name = 'observacion' placeholder = 'Ingrese un texto'/>
             </group>
           </sheet>
@@ -630,7 +588,6 @@
     <!-- **************************************
       Vistas para el modelo tra_GastoAdmin
     ****************************************-->
-
     <!-- TREE -->
     <record model = 'ir.ui.view' id = 'tra_GastoAdmin_tree'>
       <field name = 'model'>tra.gasto.admin</field>
@@ -658,8 +615,8 @@
               <field name = 'mantenimiento' placeholder = 'Total Gastos S. Básicos' />
               <field name = 'egresos_no_operativos' placeholder = 'Total Gastos S. Básicos' />
               <field name = 'venta_anual' placeholder = 'Total Venta Anual' />
-              <field name = 'total_gastos_admin' placeholder = 'Total Gastos Administrativos' />
-              <field name = 'tasa_costo_admin' placeholder = 'Tasa Costos Administrativos' />
+              <field name = 'total_gastos_admin' placeholder = 'Total Gastos Administrativos' force_save = '1'/>
+              <field name = 'tasa_costo_admin' placeholder = 'Tasa Costos Administrativos' force_save = '1'/>
               <field name = 'observacion' placeholder = 'Ingrese un texto'/>
             </group>
           </sheet>
@@ -670,7 +627,6 @@
     <!-- **************************************
       Vistas para el modelo tra_GastoIndFabricacion
     ****************************************-->
-
     <!-- TREE -->
     <record model = 'ir.ui.view' id = 'tra_GastoIndFabricacion_tree'>
       <field name = 'model'>tra.gasto.ind.fabricacion</field>
@@ -696,8 +652,8 @@
               <field name = 'servicios_basicos' placeholder = 'Gastos básicos anuales' />
               <field name = 'mano_obra_indirecta' placeholder = 'Total valor de mano de obra indirecta' />
               <field name = 'venta_anual' placeholder = 'Total Venta Anual' />
-              <field name = 'total_gastos_ind_fabricacion' placeholder = 'Total Gasto Indirecto de Fabricación'/>
-              <field name = 'tasa_costos_gastos_ind_fabricacion' placeholder = 'Tasa Costos Gastos Ind. Fabricación'/>
+              <field name = 'total_gastos_ind_fabricacion' placeholder = 'Total Gasto Indirecto de Fabricación' force_save = '1'/>
+              <field name = 'tasa_costos_gastos_ind_fabricacion' placeholder = 'Tasa Costos Gastos Ind. Fabricación' force_save = '1'/>
               <field name = 'observacion' placeholder = 'Ingrese un texto'/>
             </group>
           </sheet>
@@ -706,66 +662,207 @@
     </record>
 
 
-
-
-
-
-
-    <!-- explicit list view definition -->
-    <!--
-    <record model="ir.ui.view" id="tra_base.list">
-      <field name="name">tra_base list</field>
-      <field name="model">tra_base.tra_base</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
+    <!-- **************************************
+      Vistas para el modelo tra_TiempoProdPrenda
+    ****************************************-->
+    <!-- TREE -->
+    <record model = 'ir.ui.view' id = 'tra_TiempoProdPrenda_tree'>
+      <field name = 'model'>tra.tiempo.prod.prenda</field>
+      <field name = 'arch' type = 'xml'>
+        <tree string = 'Tiempo de producción de un prenda' >
+          <field name = 'prenda_id'/>
+          <field name = 'talla'/>
+          <field name = 'tela'/>
+          <field name = 'minutos' />
+          <field name = 'costo_mod' />
+          <field name = 'costo_ind' />
+          <field name = 'costo_gasto_admin' />
+          <field name = 'costo_gasto_venta' />
+          <field name = 'costo_total' />
         </tree>
       </field>
     </record>
-    -->
 
-    <!-- actions opening views on models -->
-    <!--
-    <record model="ir.actions.act_window" id="tra_base.action_window">
-      <field name="name">tra_base window</field>
-      <field name="res_model">tra_base.tra_base</field>
-      <field name="view_mode">tree,form</field>
-    </record>
-    -->
-
-    <!-- server action to the one above -->
-    <!--
-    <record model="ir.actions.server" id="tra_base.action_server">
-      <field name="name">tra_base server</field>
-      <field name="model_id" ref="model_tra_base_tra_base"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": self._name,
-        }
+    <!-- Vista FORM -->
+    <record model = 'ir.ui.view' id = 'tra_TiempoProdPrenda_form'>
+      <field name = 'model'>tra.tiempo.prod.prenda</field>
+      <field name = 'arch' type = 'xml'>
+        <form string = 'Tiempo de producción de una prenda'>
+          <sheet>
+            <group>
+              <field name = 'tasa_final_id' force_save = '1' invisible = '1'/>
+              <field name = 'gasto_fabricacion_id' force_save = '1' invisible = '1'/>
+              <field name = 'gasto_administrativo_id' force_save = '1' invisible = '1'/>
+              <field name = 'gasto_venta_id' force_save = '1' invisible = '1'/>
+              <field name = 'tasa_mod' readonly = '1'/>
+              <field name = 'gasto_fabricacion' readonly = '1'/>
+              <field name = 'gasto_administrativo' readonly = '1'/>
+              <field name = 'gasto_venta' readonly = '1'/>
+              <field name = 'prenda_id' />
+              <field name = 'talla' readonly = '1'/>
+              <field name = 'tela' readonly = '1'/>
+              <field name = 'minutos' placeholder = 'Tiempo de fabricación de la prenda' />
+              <field name = 'costo_mod' force_save = '1' readonly ='1'/>
+              <field name = 'costo_ind' force_save = '1' readonly ='1'/>
+              <field name = 'costo_gasto_admin' force_save = '1' readonly ='1'/>
+              <field name = 'costo_gasto_venta' force_save = '1' readonly ='1' />
+              <field name = 'costo_total' force_save = '1' readonly ='1'/>
+            </group>
+          </sheet>
+        </form>
       </field>
     </record>
-    -->
 
-    <!-- Top menu item -->
-    <!--
-    <menuitem name="tra_base" id="tra_base.menu_root"/>
-    -->
-    <!-- menu categories -->
-    <!--
-    <menuitem name="Menu 1" id="tra_base.menu_1" parent="tra_base.menu_root"/>
-    <menuitem name="Menu 2" id="tra_base.menu_2" parent="tra_base.menu_root"/>
-    -->
-    <!-- actions -->
-    <!--
-    <menuitem name="List" id="tra_base.menu_1_list" parent="tra_base.menu_1"
-              action="tra_base.action_window"/>
-    <menuitem name="Server to list" id="tra_base" parent="tra_base.menu_2"
-              action="tra_base.action_server"/>
-    -->
+
+    <!-- **************************************
+      Vistas para el modelo tra_MateriaIndirecta
+    ****************************************-->
+    <!-- TREE -->
+    <record model = 'ir.ui.view' id = 'tra_MateriaIndirecta_tree'>
+      <field name = 'model'>tra.materia.indirecta</field>
+      <field name = 'arch' type = 'xml'>
+        <tree string = 'Costo de materia prima indirecta' >
+          <field name = 'prenda_id'/>
+          <field name = 'talla'/>
+          <field name = 'tela'/>
+          <field name = 'vivo_largo'/>
+          <field name = 'vivo_ancho'/>
+          <field name = 'vivo_manga'/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Vista FORM -->
+    <record model = 'ir.ui.view' id = 'tra_MateriaIndirecta_form'>
+      <field name = 'model'>tra.materia.indirecta</field>
+      <field name = 'arch' type = 'xml'>
+        <form string = 'Costo de materia prima indirecta'>
+          <sheet>
+            <group>
+              <field name = 'prenda_id' placeholder = 'Seleccione la prenda'/>
+              <field name = 'talla' readonly ='1'/>
+              <field name = 'tela' readonly = '1'/>
+              <field name = 'largo_prenda' placeholder = 'Ingrese medida en cm.'/>
+              <field name = 'largo_factor' placeholder = 'Ingrese factor de multiplicación'/>
+              <field name = 'ancho_prenda' placeholder = 'Ingrese medida en cm.'/>
+              <field name = 'ancho_factor' placeholder = 'Ingrese factor de multiplicación'/>
+              <field name = 'largo_manga' placeholder = 'Ingrese medida en cm.'/>
+              <field name = 'manga_factor' placeholder = 'Ingrese factor de multiplicación'/>
+              <field name = 'vivo_largo' readonly = '1' force_save = '1'/>
+              <field name = 'vivo_ancho' readonly = '1' force_save = '1'/>
+              <field name = 'vivo_manga' readonly = '1' force_save = '1'/>
+            </group>
+            <group>
+              <field name="detalles_ids" widget="many2many_list" colspan="4" nolabel="1">
+                <tree editable = "bottom">
+                  <field name = "cantidad" force_save = '1' />
+                  <field name = "accesorio_ids" force_save = '1'/>
+                  <field name = "costo" force_save = '1'/>
+                  <field name = "total" force_save = '1'/>
+                </tree>
+              </field>
+            </group>
+            <group>
+              <field name = 'costo_vivo' readonly = '1' force_save ='1'/>
+              <field name = 'suma_totales' readonly = '1' force_save = '1'/>
+              <field name = 'costo_materia_indirecta' readonly = '1' force_save = '1'/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- **************************************
+      Vistas para el modelo tra_MateriaDirecta
+    ****************************************-->
+    <!-- TREE -->
+    <record model = 'ir.ui.view' id = 'tra_MateriaDirecta_tree'>
+      <field name = 'model'>tra.materia.directa</field>
+      <field name = 'arch' type = 'xml'>
+        <tree string = 'Costo de materia prima directa' >
+          <field name = 'prenda_id'/>
+          <field name = 'talla'/>
+          <field name = 'tela'/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Vista FORM -->
+    <record model = 'ir.ui.view' id = 'tra_MateriaDirecta_form'>
+      <field name = 'model'>tra.materia.directa</field>
+      <field name = 'arch' type = 'xml'>
+        <form string = 'Costo de materia prima directa'>
+          <sheet>
+            <group>
+              <field name = 'prenda_id' placeholder = 'Seleccione la prenda' force_save = '1'/>
+              <field name = 'talla' readonly = '1'/>
+              <field name = 'tela' readonly = '1'/>
+              <field name = 'ancho_tela' readonly = '1'/>
+              <field name = 'costo_tela' readonly = '1'/>
+              <field name = 'largo_frente' placeholder = 'Ingrese medida en cm.'/>
+              <field name = 'ancho_frente' placeholder = 'Ingrese medida en cm.'/>
+              <field name = 'largo_espalda' placeholder = 'Ingrese medida en cm.'/>
+              <field name = 'ancho_espalda' placeholder = 'Ingrese medida en cm.'/>
+              <field name = 'largo_manga' placeholder = 'Ingrese medida en cm.'/>
+              <field name = 'ancho_manga' placeholder = 'Ingrese medida en cm.'/>
+              <field name = 'scrap' placeholder = 'Ingrese medida en cm.'/>
+              <field name = 'largo_person' placeholder = 'Ingrese medida en cm.'/>
+              <field name = 'cantidad_tela' readonly = '1' force_save = '1'/>
+              <field name = 'tela_extra' placeholder = 'Ingrese medida en cm.'/>
+            </group>
+            <group>
+              <field name="detalles_ids" widget="many2many_list" colspan="4" nolabel="1">
+                <tree editable = "bottom">
+                  <field name = "cantidad" force_save = '1' />
+                  <field name = "materia_extra_ids" force_save = '1'/>
+                  <field name = "costo" force_save = '1'/>
+                  <field name = "total" force_save = '1'/>
+                </tree>
+              </field>
+            </group>
+            <group>
+              <field name = 'costo_materia_extra' readonly = '1' force_save = '1'/>
+              <field name = 'total_largo' readonly = '1' force_save = '1'/>
+              <field name = 'total_ancho' readonly = '1' force_save = '1'/>
+              <field name = 'num_piezas' readonly = '1' force_save = '1'/>
+              <field name = 'costo_tela_cuerpo' readonly = '1' force_save = '1'/>
+              <field name = 'costo_tela_extra' readonly = '1' force_save = '1'/>
+              <field name = 'total_tela_utilizada' readonly = '1' force_save = '1'/>
+              <field name = 'total_costo_tela' readonly = '1' force_save = '1'/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- **************************************
+      Vistas para el modelo tra_PROFORMA
+    ****************************************-->
+    <!-- TREE
+    <record model = 'ir.ui.view' id = 'tra_Proforma_tree'>
+      <field name = 'model'>tra.proforma</field>
+      <field name = 'arch' type = 'xml'>
+        <tree string = 'Proforma a clientes' >
+          <field name = 'name'/>
+          <field name = 'cliente_id'/>
+        </tree>
+      </field>
+    </record> -->
+
+    <!-- Vista FORM
+    <record model = 'ir.ui.view' id = 'tra_Proforma_form'>
+      <field name = 'model'>tra.proforma</field>
+      <field name = 'arch' type = 'xml'>
+        <form string = 'Proforma a Clientes'>
+          <sheet>
+            <group>
+              <field name = 'name' />
+              <field name = 'cliente_id'/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record> -->
+
   </data>
 </odoo>

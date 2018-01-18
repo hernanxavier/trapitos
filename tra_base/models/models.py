@@ -13,46 +13,6 @@ from odoo import models, fields, api
 #     @api.depends('value')
 #     def _value_pc(self):
 #         self.value2 = float(self.value) / 100
-###############################  BORRAR ##################################################
-class tra_autor(models.Model):
-    _name= 'tra.autor'
-    name= fields.Char('Nombre', size = 100)
-    address = fields.Char('Direccion', size = 100)
-    books_ids = fields.One2many('tra.books','autor_id', 'Books')
-
-class tra_libro(models.Model):
-    _name = 'tra.books'
-    name = fields.Char('Título', size = 100)
-    autor_id = fields.Many2one('tra.autor', 'Autor')
-################################ HASTA AQUI BORRAR #################################################
-
-class tra_TiempoTrabajo(models.Model):
-    @api.multi
-    @api.depends('jornada_horas', 'descanso_minutos')
-    def _get_jornada_diaria_min (self):
-        for diaria in self:
-            diaria.jornada_diaria_min = (diaria.jornada_horas * 60) - diaria.descanso_minutos
-
-    @api.multi
-    @api.depends('jornada_diaria_min', 'dia_laborables_anio')
-    def _get_minutos_persona_anual(self):
-        for minutos in self:
-            minutos.minutos_persona_anual = minutos.jornada_diaria_min * minutos.dia_laborables_anio
-
-    _name = 'tra.tiempo.trabajo'
-    _description = 'Registra el tiempo de descanso y dias laborables de una jornada laboral'
-
-    name = fields.Char('Nombre Jornada', size = 100, required = True)
-    jornada_horas = fields.Float ('Horas Laborales', size = 3, required = True)
-    descanso_minutos = fields.Float('Minutos de descanso (Día)', size = 3, required = True)
-    dia_laborables_anio = fields.Float(u'Dias laborables (Año)', size = 3, required = True)
-    minutos_producidos_anio = fields.Float('Minutos Producidos(Año)', size = 9, required = True)
-    proyeccion_incremento = fields.Float ('Proyeccion de Incremento(%)', size = 4, requiered = True)
-    observacion = fields.Text('Observacion', required = False)
-
-    #Campos calculados
-    jornada_diaria_min = fields.Float(compute = '_get_jornada_diaria_min', string = 'Joranada diaria (min.)', store = True)
-    minutos_persona_anual = fields.Float(compute = '_get_minutos_persona_anual', string = 'Minutos persona laborados (año)', store = True)
 
 class tra_CostesManoObraDirecta(models.Model):
     @api.multi
@@ -80,7 +40,6 @@ class tra_CostesManoObraDirecta(models.Model):
         for i in self:
             i.jornada_laboral_id = i.env['tra.tiempo.trabajo'].search([], limit = 1).id
 
-
     @api.multi
     @api.onchange('total_sueldo','minutos_anual')
     @api.depends('total_sueldo','minutos_anual')
@@ -103,7 +62,6 @@ class tra_CostesManoObraDirecta(models.Model):
     total_sueldo_variable = fields.Float (compute = '_get_total_sueldo_variable', store = True, string = 'Total Sueldo Variable')
     total_sueldo = fields.Float(compute = '_get_total_sueldo', store = True, string = 'Total Sueldo')
     tasa_empleado = fields.Float (compute = '_get_tasa_empleado', string = 'Tasa')
-
 
 class tra_ColorTela (models.Model):
     _name = 'tra.color.tela'
@@ -199,6 +157,34 @@ class tra_Prenda(models.Model):
     codigo = fields.Char('Codigo', size = 9, required = True)
     observacion = fields.Text(u'Observación', required = False)
 
+class tra_TiempoTrabajo(models.Model):
+    @api.multi
+    @api.depends('jornada_horas', 'descanso_minutos')
+    def _get_jornada_diaria_min (self):
+        for diaria in self:
+            diaria.jornada_diaria_min = (diaria.jornada_horas * 60) - diaria.descanso_minutos
+
+    @api.multi
+    @api.depends('jornada_diaria_min', 'dia_laborables_anio')
+    def _get_minutos_persona_anual(self):
+        for minutos in self:
+            minutos.minutos_persona_anual = minutos.jornada_diaria_min * minutos.dia_laborables_anio
+
+    _name = 'tra.tiempo.trabajo'
+    _description = 'Registra el tiempo de descanso y dias laborables de una jornada laboral'
+
+    name = fields.Char('Nombre Jornada', size = 100, required = True)
+    jornada_horas = fields.Float ('Horas Laborales', size = 3, required = True)
+    descanso_minutos = fields.Float('Minutos de descanso (Día)', size = 3, required = True)
+    dia_laborables_anio = fields.Float(u'Dias laborables (Año)', size = 3, required = True)
+    minutos_producidos_anio = fields.Float('Minutos Producidos(Año)', size = 9, required = True)
+    proyeccion_incremento = fields.Float ('Proyeccion de Incremento(%)', size = 4, requiered = True)
+    observacion = fields.Text('Observacion', required = False)
+
+    #Campos calculados
+    jornada_diaria_min = fields.Float(compute = '_get_jornada_diaria_min', string = 'Joranada diaria (min.)', store = True)
+    minutos_persona_anual = fields.Float(compute = '_get_minutos_persona_anual', string = 'Minutos persona laborados (año)', store = True)
+
 class tra_ManoObraDirecta(models.Model):
     @api.multi
     @api.depends('personal_ids', 'observacion')
@@ -284,7 +270,6 @@ class tra_ManoObraDirecta(models.Model):
     minutos_producidos_anio_id = fields.Float('Minutos Producidos Año', store = False, related = 'tiempo_trabajo_id.minutos_producidos_anio')
     proyeccion_incremento_id = fields.Float('Proyección de incremento (%)', store = False, related = 'tiempo_trabajo_id.proyeccion_incremento')
     observacion = fields.Text('Observaciones', required = False)
-    #################################################
     #Campos realcionales
     personal_ids = fields.Many2many('hr.employee', 'tra_mod_employee', 'mod_id','employee_id', string = 'Lista empleados')
     #Campos calculados
@@ -328,6 +313,8 @@ class tra_Utilidad(models.Model):
 
 class tra_Accesorio(models.Model):
     @api.multi
+    @api.depends('costo', 'iva', 'costo')
+    @api.onchange('costo', 'iva', 'costo')
     def _get_valor_total (self):
         #Calcula el campo largo total
         for i in self:
@@ -348,8 +335,9 @@ class tra_Accesorio(models.Model):
     codigo = fields.Char (u'Código de producto', size = 9, required = True)
     costo = fields.Float ('Costo', size = 11, required = True)
     iva = fields.Float ('IVA(%)', size = 4, required = True)
-    valor_total = fields.Float (compute = '_get_valor_total', string = 'Total')
     observacion = fields.Text ('Observaciones', required = False)
+    #Campos Calculados
+    valor_total = fields.Float (compute = '_get_valor_total', string = 'Total')
 
 class tra_MateriaForro(models.Model):
     @api.multi
@@ -385,6 +373,7 @@ class tra_MateriaForro(models.Model):
 
     @api.multi
     @api.depends('piezas_reales', 'largo_total')
+    @api.onchange('piezas_reales', 'largo_total')
     def _get_tela_utilizada (self):
         #Calcula la cantidad de tela utilizada para producir la prenda
         import math
@@ -397,6 +386,7 @@ class tra_MateriaForro(models.Model):
 
     @api.multi
     @api.depends('largo_total', 'costo_tela_id', 'piezas_reales')
+    @api.onchange('largo_total', 'costo_tela_id', 'piezas_reales')
     def _get_costo_tela_cuerpo (self):
         #Calcula el costo de tela utilizada en el cuerpo de la prenda
         import math
@@ -409,6 +399,7 @@ class tra_MateriaForro(models.Model):
 
     @api.multi
     @api.depends('costo_tela_id', 'cantidad_tela_extra')
+    @api.onchange('costo_tela_id', 'cantidad_tela_extra')
     def _get_costo_tela_extra (self):
         # Calcula el costo de tela extra utilizada en la prenda
         import math
@@ -417,6 +408,7 @@ class tra_MateriaForro(models.Model):
 
     @api.multi
     @api.depends('accesorio_ids', 'accesorio_ids.valor_total')
+    @api.onchange('accesorio_ids', 'accesorio_ids.valor_total')
     def _get_costo_accesorios (self):
         # Suma el costo de los diferentes accesorios extras
         suma_costos = 0
@@ -427,26 +419,29 @@ class tra_MateriaForro(models.Model):
 
     @api.multi
     @api.depends('tela_utilizada', 'cantidad_tela_extra')
+    @api.onchange('tela_utilizada', 'cantidad_tela_extra')
     def _get_total_tela_utilizada (self):
         # Suma la cantidad de tela utilizada en el cuepro de laprenda y la cantidad extra
         for i in self:
             i.total_tela_utilizada = i.tela_utilizada + i.cantidad_tela_extra
 
     @api.multi
-    @api.depends ('costo_tela_extra', 'costo_tela_cuerpo', 'costo_accesorios')
+    @api.depends('costo_tela_extra', 'costo_tela_cuerpo', 'costo_accesorios')
+    @api.onchange('costo_tela_extra', 'costo_tela_cuerpo', 'costo_accesorios')
     def _get_costo_total(self):
     # Calcula el costo total de la tela utilizada para la prenta textil
         for i in self:
             i.costo_total = i.costo_tela_extra + i.costo_tela_cuerpo + i.costo_accesorios
 
     @api.multi
+    @api.depends('talla_id')
     @api.onchange('talla_id')
     def _get_nombre_forro(self):
         nombre = cod = ''
         for i in self:
             if i.name and i.talla_id.name != False:
-                i.name = i.name.strip()
-                nombre = i.name.split(' ')
+                i.name = i.name.strip() #Limpia los espacios en blanco del principio y el fin
+                nombre = i.name.split(' ') #Devuelve una lista resultado de la división de la cadena por el caracter especificado (Espacio en Blanco)
                 for palabra in nombre:
                     cod += palabra[0].upper()
                 i.codigo = cod + '0T' + i.talla_id.name
@@ -494,24 +489,31 @@ class tra_MateriaForro(models.Model):
 class tra_MateriaPrimaExtra(models.Model):
     @api.multi
     @api.depends('scrap', 'largo_extra')
+    @api.onchange('scrap', 'largo_extra')
     def _get_largo_total(self):
         # Calcula el largo total de la Materia Prima Extra
-        self.largo_total = self.largo_extra + self.scrap
+        for i in self:
+            i.largo_total = i.largo_extra + i.scrap
+
+    @api.multi
+    @api.depends('ancho_extra', 'factor_ancho')
+    @api.onchange('ancho_extra', 'factor_ancho')
+    def _get_ancho_total(self):
+        for i in self:
+            i.ancho_total = i.factor_ancho * i.ancho_extra
 
     @api.multi
     @api.depends('ancho_tela_id', 'ancho_extra')
+    @api.onchange('ancho_tela_id', 'ancho_extra')
     def _get_piezas_reales(self):
         import math
         # Calcula el numero de piezas reales que se obtiene dependiendo del ancho de la telas
         piezas = 0
         for i in self:
-            if i.ancho_extra > 0:
-                piezas = i.ancho_tela_id / i.ancho_extra
+            if i.ancho_total > 0:
+                piezas = i.ancho_tela_id / i.ancho_total
                 t = math.modf(piezas) # math.modf(Decimal) esto devuelve una tupla con la parte decimal y en la posicion 1 la parte entera
-                if t[0] >= 0.50: # Si la aparte decimal es mayor a 0,50 entonces baja a 0,50
-                    piezas = t[1] + 0.50
-                else: # Si es menor entonces solamente queda la parte entera
-                    piezas = t[1]
+                piezas = t[1]
                 i.piezas_reales = piezas
             else:
                 i.piezas_reales = 0
@@ -536,14 +538,14 @@ class tra_MateriaPrimaExtra(models.Model):
         # Calcula el costo de la materia prima extra en las prendas textiles
         for i in self:
             if i.piezas_reales > 0:
-                mult = i.largo_extra * i.costo_tela_id
-                i.costo_materia_extra = mult / i.piezas_reales
+                multip = i.largo_extra * i.costo_tela_id
+                i.costo_materia_extra = multip / i.piezas_reales
 
     @api.multi
     @api.onchange('talla_id')
     def _get_nombre_materia_extra(self):
         for i in self:
-            if i.talla_id.name != False:
+            if i.talla_id.name != False and i.name != False:
                 i.name += ' T' + i.talla_id.name
 
     _name = 'tra.materia.prima.extra'
@@ -554,6 +556,7 @@ class tra_MateriaPrimaExtra(models.Model):
     talla_id = fields.Many2one ('tra.talla', 'Talla', required = True)
     tela_id = fields.Many2one('tra.tela', 'Tela', required = True)
     ancho_extra = fields.Float('Ancho Extra', size = 9, required = True)
+    factor_ancho = fields.Float('Factor Ancho', size = 9, required = True, default = 1)
     largo_extra = fields.Float('Largo Extra', size = 9, required = True)
     scrap = fields.Float('Scrap', size = 9, required = True)
     observacion = fields.Text('Observaciones', required = False)
@@ -564,6 +567,7 @@ class tra_MateriaPrimaExtra(models.Model):
 
     #Campos calculados
     largo_total = fields.Float(compute = '_get_largo_total', string = 'Largo Total', store = True)
+    ancho_total = fields.Float(compute = '_get_ancho_total', string = 'Ancho Total', store = True)
     piezas_reales = fields.Float(compute = '_get_piezas_reales', string = 'Nro. Piezas', store = True)
     tela_utilizada = fields.Float(compute = '_get_tela_utilizada', string = 'Tela a utilizar', store = True)
     costo_materia_extra = fields.Float(compute = '_get_costo_materia_extra', string = 'Costo Mat. Prima Extra', store = True)
@@ -651,7 +655,7 @@ class tra_GastoIndFabricacion(models.Model):
     def _get_tasa_costo_ind_fabricacion(self):
         for i in self:
             if i.venta_anual > 0:
-                i.tasa_costos_gastos_ind_fabricacion = (i.total_gastos_ind_fabricacion / i.venta_anual) + 100
+                i.tasa_costos_gastos_ind_fabricacion = (i.total_gastos_ind_fabricacion / i.venta_anual) * 100
 
     _name = 'tra.gasto.ind.fabricacion'
     _description = 'Registra y calcula valores de gastos indirectos de fabricacion'
@@ -665,4 +669,317 @@ class tra_GastoIndFabricacion(models.Model):
 
     #Campos calculados
     total_gastos_ind_fabricacion = fields.Float(compute = '_get_total_gastos_ind_fabricacion', string = u'Gastos Ind. Fabricación', store = True)
-    tasa_costos_gastos_ind_fabricacion = fields.Float(compute = '_get_tasa_costo_ind_fabricacion', string = 'Tasa de Costo Indirecto de Fab. (%)')
+    tasa_costos_gastos_ind_fabricacion = fields.Float(compute = '_get_tasa_costo_ind_fabricacion', string = 'Tasa de Costo Ind. Fab. (%)')
+
+class tra_TiempoProdPrenda(models.Model):
+
+    @api.multi
+    @api.onchange('prenda_id')
+    @api.depends('prenda_id')
+    def _get_tasa_final_id(self):
+        for i in self:
+            i.tasa_final_id = i.env['tra.mano.obra.directa'].search([], limit = 1).id
+
+    @api.multi
+    @api.onchange('tasa_final_id')
+    @api.depends('tasa_final_id')
+    def _get_gastos_fabricacion_id(self):
+        for i in self:
+            i.gasto_fabricacion_id = i.env['tra.gasto.ind.fabricacion'].search([], limit = 1).id
+
+    @api.multi
+    @api.onchange('tasa_final_id')
+    @api.depends('tasa_final_id')
+    def _get_gasto_administrativo_id(self):
+        for i in self:
+            i.gasto_administrativo_id = i.env['tra.gasto.admin'].search([], limit = 1).id
+
+    @api.multi
+    @api.onchange('tasa_final_id')
+    @api.depends('tasa_final_id')
+    def _get_gastos_ventas_id(self):
+        for i in self:
+            i.gasto_venta_id = i.env['tra.gasto.venta'].search([], limit = 1).id
+
+    @api.multi
+    @api.onchange('minutos')
+    @api.depends('tasa_mod')
+    def _get_costo_mod(self):
+        for i in self:
+            i.costo_mod = i.tasa_mod * i.minutos
+
+    @api.multi
+    @api.depends('costo_mod')
+    def _get_costo_ind(self):
+        for i in self:
+            i.costo_ind = i.costo_mod * (i.gasto_fabricacion / 100)
+
+    @api.multi
+    @api.depends('costo_mod')
+    def _get_costo_gasto_admin(self):
+        for i in self:
+            i.costo_gasto_admin = i.costo_mod * (i.gasto_administrativo / 100)
+
+    @api.multi
+    @api.depends('costo_mod')
+    def _get_costo_gasto_venta(self):
+        for i in self:
+            i.costo_gasto_venta = i.costo_mod * (i.gasto_venta / 100)
+
+    @api.multi
+    @api.depends('costo_mod')
+    def _get_costo_total(self):
+        for i in self:
+            i.costo_total = i.costo_mod + i.costo_ind + i.costo_gasto_admin + i.costo_gasto_venta
+
+
+    _name = 'tra.tiempo.prod.prenda'
+    _description = 'Registra el tiempo de producción de una prenda textil'
+
+    tasa_final_id = fields.Many2one('tra.mano.obra.directa', 'Tasa MOD', default = _get_tasa_final_id, store = True)
+    tasa_mod = fields.Float('Tasa MOD', store = False, related = 'tasa_final_id.tasa_final')
+    gasto_fabricacion_id = fields.Many2one('tra.gasto.ind.fabricacion', u'Gasto de Fabricación', default = _get_gastos_fabricacion_id, store = True)
+    gasto_fabricacion = fields.Float(u'Tasa gastos ind. Fab.', store = False, related = 'gasto_fabricacion_id.tasa_costos_gastos_ind_fabricacion')
+    gasto_administrativo_id = fields.Many2one('tra.gasto.admin', 'Gastos Administrativos', default = _get_gasto_administrativo_id, store = True)
+    gasto_administrativo = fields.Float('Tasa gastos Admin.', store = False, related = 'gasto_administrativo_id.tasa_costo_admin')
+    gasto_venta_id = fields.Many2one('tra.gasto.venta','Gastos de Ventas', default = _get_gastos_ventas_id)
+    gasto_venta = fields.Float('Tasa gastos Ventas', store = False, related = 'gasto_venta_id.tasa_costo_ventas')
+    prenda_id = fields.Many2one('tra.prenda', string = 'Prenda', required = True)
+    talla = fields.Char ('Talla', related = 'prenda_id.talla_id.name', store = False)
+    tela = fields.Char ('Tela', related = 'prenda_id.tela_id.name', store = False)
+    minutos = fields.Float('Minutos producción', required = True)
+    costo_mod = fields.Float(compute = '_get_costo_mod', string = 'Costo', store = True)
+    costo_ind = fields.Float(compute ='_get_costo_ind', string = 'Costo Ind.', store = True)
+    costo_gasto_admin = fields.Float(compute = '_get_costo_gasto_admin',string = 'Gasto Admin.', store = True)
+    costo_gasto_venta = fields.Float(compute = '_get_costo_gasto_venta', string = 'Gasto Venta', store = True)
+    costo_total = fields.Float(compute = '_get_costo_total', string = 'Total Costo', store = True)
+
+class tra_MateriaIndirecta(models.Model):
+    @api.multi
+    @api.depends('largo_prenda','largo_factor')
+    @api.onchange('largo_prenda','largo_factor')
+    def _get_vivo_largo(self):
+        for i in self:
+            i.vivo_largo = i.largo_prenda * i.largo_factor
+
+    @api.multi
+    @api.depends('ancho_prenda','ancho_factor')
+    @api.onchange('ancho_prenda','ancho_factor')
+    def _get_vivo_ancho(self):
+        for i in self:
+            i.vivo_ancho = i.ancho_prenda * i.ancho_factor
+
+    @api.multi
+    @api.depends('largo_manga','manga_factor')
+    @api.onchange('largo_manga','manga_factor')
+    def _get_manga_largo(self):
+        for i in self:
+            i.vivo_manga = i.largo_manga * i.manga_factor
+
+    @api.multi
+    @api.depends('vivo_largo', 'vivo_ancho', 'vivo_manga')
+    @api.onchange('vivo_largo', 'vivo_ancho', 'vivo_manga')
+    def _get_costo_vivo(self):
+        for i in self:
+            costo_tela = i.env['tra.tela'].search([('name', '=like', i.tela)]).costo_total
+            i.costo_vivo = (i.vivo_largo + i.vivo_ancho + i.vivo_manga) * costo_tela
+
+    @api.multi
+    @api.depends('detalles_ids')
+    @api.onchange('detalles_ids')
+    def _get_suma_totales(self):
+        for i in self:
+            suma = 0
+            for j in i.detalles_ids:
+                suma += j.total
+            i.suma_totales = suma
+
+    @api.multi
+    @api.depends('suma_totales', 'costo_vivo')
+    @api.onchange('suma_totales', 'costo_vivo')
+    def _get_costo_materia_indirecta(self):
+        for i in self:
+            i.costo_materia_indirecta = i.costo_vivo + i.suma_totales
+
+    _name = 'tra.materia.indirecta'
+    _description = 'Calcula el costo de la materia prima indirecta de una prenda'
+
+    prenda_id = fields.Many2one ('tra.prenda', 'Prenda', required = True, store = True)
+    talla = fields.Char('Talla', related = 'prenda_id.talla_id.name', store = False)
+    tela = fields.Char('Tela', related = 'prenda_id.tela_id.name', store = False)
+    largo_prenda = fields.Float('Largo de prenda', required = True)
+    largo_factor = fields.Float('Factor Largo', required = True)
+    ancho_prenda = fields.Float('Ancho de prenda', required = True)
+    ancho_factor = fields.Float('Factor Ancho', required = True)
+    largo_manga = fields.Float('Largo de manga', required = True)
+    manga_factor = fields.Float('Factor Manga', required = True)
+    #Campos calculados
+    vivo_largo = fields.Float(compute = '_get_vivo_largo', string = 'Vivo en Largo', store = True)
+    vivo_ancho = fields.Float(compute = '_get_vivo_ancho', string = 'Vivo en Ancho', store = True)
+    vivo_manga = fields.Float(compute = '_get_vivo_manga', string = 'Vivo en Manga', store = True)
+    costo_vivo = fields.Float(compute = '_get_costo_vivo', string = 'Costo de Vivo', store = True)
+    detalles_ids = fields.One2many('tra.materia.indirecta.detail', 'detail_id', string = 'Accesorios')
+    suma_totales = fields.Float(compute = '_get_suma_totales', string = 'Total Accesorios', store = True)
+    costo_materia_indirecta = fields.Float(compute= '_get_costo_materia_indirecta', string = 'Costo Total MPI', store = True)
+
+
+class tra_MateriaIndirecta_detail(models.Model):
+    @api.multi
+    @api.depends('cantidad', 'accesorio_ids', 'costo')
+    @api.onchange('cantidad', 'accesorio_ids', 'costo')
+    def _get_valor_total(self):
+        for i in self:
+            i.total = i.costo * i.cantidad
+
+    _name = 'tra.materia.indirecta.detail'
+    _description = 'Detalle de Materia indirecta'
+
+    detail_id = fields.Many2one ('tra.materia.indirecta', 'Materia Prima Prenda')
+    cantidad = fields.Integer('Cant.', default = 1, required = True)
+    accesorio_ids = fields.Many2one('tra.accesorio', 'Accesorios', store = True)
+    costo = fields.Float(related = 'accesorio_ids.valor_total', string = 'Valor Unitario', store = True)
+    total = fields.Float(compute = '_get_valor_total', string = 'Total', store = True)
+
+class tra_MateriaDirecta(models.Model):
+    @api.multi
+    @api.depends('largo_frente','largo_manga','scrap','largo_person')
+    @api.onchange('largo_frente','largo_manga','scrap','largo_person')
+    def _get_total_largo(self):
+        for i in self:
+            i.total_largo = i.largo_frente + i.largo_manga + i.scrap + i.largo_person
+
+    @api.multi
+    @api.depends('ancho_frente','ancho_espalda')
+    @api.onchange('ancho_frente','ancho_espalda')
+    def _get_total_ancho(self):
+        for i in self:
+            i.total_ancho = i.ancho_frente + i.ancho_espalda
+
+    @api.multi
+    @api.depends('total_ancho', 'ancho_tela')
+    @api.onchange('total_ancho', 'ancho_tela')
+    def _get_num_piezas(self):
+        import math
+        for i in self:
+            if i.total_ancho > 0:
+                piezas = i.ancho_tela / i.total_ancho
+            else:
+                piezas = 0
+            t = math.modf(piezas) # math.modf(Decimal) esto devuelve una tupla con la parte decimal y en la posicion 1 la parte entera
+            if t[0] >= 0.50: # Si la aparte decimal es mayor a 0,50 entonces baja a 0,50
+                piezas= t[1] + 0.50
+            else: # Si es menor entonces solamente queda la parte entera
+                piezas = t[1]
+            i.num_piezas = piezas
+
+    @api.multi
+    @api.depends('num_piezas', 'total_largo')
+    @api.onchange('num_piezas', 'total_largo')
+    def _get_cantidad_tela (self):
+        import math
+        for i in self:
+            if i.num_piezas > 0:
+                multip = 1 / i.num_piezas
+            else:
+                multip = 0
+            t = math.modf(multip) # math.modf(Decimal) esto devuelve una tupla con la parte decimal y en la posicion 1 la parte entera
+            if t[0] > 0: # Si la aparte decimal es mayor a 0,50 entonces baja a 0,50
+                multip = t[1] + 1
+            else: # Si es menor entonces solamente queda la parte entera
+                multip = t[1]
+            i.cantidad_tela = multip * i.total_largo
+
+    @api.multi
+    @api.depends('costo_tela', 'total_largo', 'num_piezas')
+    @api.onchange('costo_tela', 'total_largo', 'num_piezas')
+    def _get_costo_tela_cuerpo(self):
+        for i in self:
+            if i.num_piezas > 0:
+                i.costo_tela_cuerpo = (i.total_largo * i.costo_tela) / i.num_piezas
+
+    @api.multi
+    @api.depends('tela_extra', 'costo_tela')
+    @api.onchange('tela_extra', 'costo_tela')
+    def _get_costo_tela_extra(self):
+        for i in self:
+            i.costo_tela_extra = i.costo_tela * i.tela_extra
+
+
+
+    @api.multi
+    @api.depends('cantidad_tela', 'tela_extra')
+    @api.onchange('cantidad_tela', 'tela_extra')
+    def _get_total_tela_utilizada(self):
+        for i in self:
+            i.total_tela_utilizada = i.cantidad_tela + i.tela_extra
+
+    @api.multi
+    @api.depends('detalles_ids')
+    def _get_costo_materia_extra(self):
+        for i in self:
+            suma = 0
+            for j in i.detalles_ids:
+                suma += j.total
+            i.costo_materia_extra = suma
+
+    @api.multi
+    @api.depends('costo_tela_extra', 'costo_tela_cuerpo', 'costo_materia_extra')
+    @api.onchange('costo_tela_extra', 'costo_tela_cuerpo', 'costo_materia_extra')
+    def _get_total_costo_tela(self):
+        for i in self:
+            i.total_costo_tela = i.costo_tela_cuerpo + i.costo_tela_extra + i.costo_materia_extra
+
+    _name = 'tra.materia.directa'
+    _description = 'Registra y calcula costos de materia prima de una prenda textil'
+
+    prenda_id = fields.Many2one('tra.prenda', 'Prenda', required = True, store = True)
+    talla = fields.Char('Talla', related = 'prenda_id.talla_id.name', store = False)
+    tela = fields.Char('Tela', related = 'prenda_id.tela_id.name', store = False)
+    ancho_tela = fields.Float('Ancho de Tela (m.)', related = 'prenda_id.tela_id.ancho', store = False)
+    costo_tela = fields.Float('Costo de Tela x m.', related = 'prenda_id.tela_id.costo')
+    largo_frente = fields.Float('Largo de Frente', size = 6, required = True)
+    ancho_frente = fields.Float('Ancho de Frente', size = 6, required = True)
+    largo_espalda = fields.Float('Largo de Espalda', size = 6, required = True)
+    ancho_espalda = fields.Float('Ancho de Espalda', size = 6, required = True)
+    largo_manga = fields.Float('Largo de Manga', size = 6, required = True)
+    ancho_manga = fields.Float('Ancho de Manga', size = 6, required = True)
+    scrap = fields.Float('Scrap', size = 6, required = True)
+    largo_person = fields.Float('Tamaño Personalizado', size = 6, required = False)
+    tela_extra = fields.Float('Tela Extra', size = 6, required = False)
+    detalles_ids = fields.One2many('tra.materia.directa.detail', 'detail_id', string = 'Accesorios')
+    total_largo = fields.Float(compute = '_get_total_largo', string = 'Total Largo', store = True)
+    total_ancho = fields.Float(compute = '_get_total_ancho', string = 'Total Ancho', store = True)
+    num_piezas = fields.Float(compute = '_get_num_piezas', string = u'Número de Piezas', store = True)
+    cantidad_tela = fields.Float(compute = '_get_cantidad_tela', string = 'Cantidad Tela', store = True)
+    total_tela_utilizada = fields.Float(compute = '_get_total_tela_utilizada', string = 'Total Tela Util.', store = True)
+    costo_tela_cuerpo = fields.Float(compute = '_get_costo_tela_cuerpo', string = 'Costo Tela Cuerpo', store = True)
+    costo_tela_extra = fields.Float(compute = '_get_costo_tela_extra', string = 'Costo Tela Extra', store = True)
+    costo_materia_extra = fields.Float(compute = '_get_costo_materia_extra', string = 'Costo Mat. Prima Extra', store = True)
+    total_costo_tela = fields.Float(compute = '_get_total_costo_tela', string = 'Suma Costos Tela', store = True)
+
+
+class tra_MateriaDirecta_Detail(models.Model):
+    @api.multi
+    @api.depends('cantidad', 'materia_extra_ids', 'costo')
+    @api.onchange('cantidad', 'materia_extra_ids', 'costo')
+    def _get_valor_total(self):
+        for i in self:
+            i.total = i.costo * i.cantidad
+
+    _name = 'tra.materia.directa.detail'
+    _description = 'Registra los accesorios de materia prima directa'
+
+    detail_id = fields.Many2one ('tra.materia.directa', 'Materia Prima Prenda')
+    cantidad = fields.Integer('Cant.', default = 1, required = True)
+    materia_extra_ids = fields.Many2one('tra.materia.prima.extra', 'Materia P. Extra', store = True)
+    costo = fields.Float(related = 'materia_extra_ids.costo_materia_extra', string = 'Valor Unitario', store = True)
+    total = fields.Float(compute = '_get_valor_total', string = 'Total', store = True)
+
+
+class tra_Proforma(models.Model):
+    _inherit = 'product.template'
+    #_name = 'tra.proforma'
+    #_description = 'Registra y guarda una cotización para clientes'
+
+    name = fields.Char(u'Nro. Cotización' )
+    cliente_id = fields.Many2one('res.partner', string = 'Cliente')
