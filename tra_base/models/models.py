@@ -124,20 +124,20 @@ class tra_Talla(models.Model):
     observacion = fields.Text('Observaciones', size = 200 , required = False)
 
 class tra_Prenda(models.Model):
-    _name = 'tra.prenda'
+    # _name = 'tra.prenda'
     _description = 'Registra el nombre de una prenda'
     _order = 'name'
+    _inherit = 'product.template'
 
     _sql_constraints = [
-        ('unique_codigo', 'unique(codigo)', 'Otra prenda tiene el mismo código. Por favor escriba otro código'),
-        ('unique_name_tela_talla', 'unique(name, tela_id, talla_id)', 'La prenda ya existe. Escriba otro nombre, tela o talla'),
+        #('unique_codigo', 'unique(codigo)', 'Otra prenda tiene el mismo código. Por favor escriba otro código'),
+        #('unique_name_tela_talla', 'unique(name, tela_id, talla_id)', 'La prenda ya existe. Escriba otro nombre, tela o talla'),
     ]
 
-    name = fields.Char('Nombre', size = 100, required = True)
+    #name = fields.Char('Nombre', size = 100, required = True)
     tela_id = fields.Many2one ('tra.tela', 'Tela', required = True)
     talla_id = fields.Many2one ('tra.talla', 'Talla', required = True)
-    codigo = fields.Char('Codigo', size = 9, required = True)
-    observacion = fields.Text(u'Observación', required = False)
+    forro_id = fields.Many2one ('tra.materia.forro', 'Forro', required = False)
 
     @api.multi
     @api.onchange('talla_id')
@@ -150,7 +150,7 @@ class tra_Prenda(models.Model):
                 nombre = i.name.split(' ')
                 for palabra in nombre:
                     cod += palabra[0].upper()
-                i.codigo = cod + '0T' + i.talla_id.name
+                i.default_code = cod + '0T' + i.talla_id.name
                 i.name += ' T' + i.talla_id.name
 
     @api.multi
@@ -160,6 +160,7 @@ class tra_Prenda(models.Model):
         for i in self:
             if i.name != False:
                 i.name = i.name.upper()
+
 
 class tra_TiempoTrabajo(models.Model):
     _name = 'tra.tiempo.trabajo'
@@ -296,7 +297,7 @@ class tra_FormaPago(models.Model):
 
     _sql_constraints =[
         ('unique_name', 'unique(name)', 'El nombre de la jornada ya existe'),
-        ('unique_codigo', 'unique(codigo)', u'El código de la jornada ya existe'),
+        #('unique_codigo', 'unique(codigo)', u'El código de la jornada ya existe'),
     ]
     name = fields.Char('Nombre', size = 100, required = True)
     recargo = fields.Float('Recargo', size = 9, required = True)
@@ -308,7 +309,7 @@ class tra_Utilidad(models.Model):
 
     _sql_constraints =[
         ('unique_name', 'unique(name)', 'El nombre de la jornada ya existe'),
-        ('unique_codigo', 'unique(codigo)', u'El código de la jornada ya existe'),
+        #('unique_codigo', 'unique(codigo)', u'El código de la jornada ya existe'),
     ]
 
     name = fields.Char('Nombre', size = 100, required = True)
@@ -758,7 +759,7 @@ class tra_TiempoProdPrenda(models.Model):
     gasto_administrativo = fields.Float('Tasa gastos Admin.', store = False, related = 'gasto_administrativo_id.tasa_costo_admin')
     gasto_venta_id = fields.Many2one('tra.gasto.venta','Gastos de Ventas', default = _get_gastos_ventas_id)
     gasto_venta = fields.Float('Tasa gastos Ventas', store = False, related = 'gasto_venta_id.tasa_costo_ventas')
-    prenda_id = fields.Many2one('tra.prenda', string = 'Prenda', required = True)
+    prenda_id = fields.Many2one('product.template', string = 'Prenda', required = True)
     talla = fields.Char ('Talla', related = 'prenda_id.talla_id.name', store = False)
     tela = fields.Char ('Tela', related = 'prenda_id.tela_id.name', store = False)
     # Campos Calculados
@@ -849,12 +850,12 @@ class tra_MaterialesIndirectos(models.Model):
 
 
 class tra_MateriaIndirecta(models.Model):
-    _name = 'tra.materia.indirecta'
+    #_name = 'tra.materia.indirecta'
     _description = 'Calcula el costo de la materia prima indirecta de una prenda'
-
-    prenda_id = fields.Many2one ('tra.prenda', 'Prenda', required = True, store = True)
-    talla = fields.Char('Talla', related = 'prenda_id.talla_id.name', store = False)
-    tela = fields.Char('Tela', related = 'prenda_id.tela_id.name', store = False)
+    _inherit = 'product.template'
+    #prenda_id = fields.Many2one ('product.template', 'Prenda', required = True, store = True)
+    #talla = fields.Char('Talla', related = 'prenda_id.talla_id.name', store = False)
+    #tela = fields.Char('Tela', related = 'prenda_id.tela_id.name', store = False)
     largo_prenda = fields.Float('Largo de prenda', required = True)
     largo_factor = fields.Float('Factor Largo', required = True)
     ancho_prenda = fields.Float('Ancho de prenda', required = True)
@@ -894,7 +895,7 @@ class tra_MateriaIndirecta(models.Model):
     @api.multi
     @api.depends('largo_manga','manga_factor')
     @api.onchange('largo_manga','manga_factor')
-    def _get_manga_largo(self):
+    def _get_vivo_manga(self):
         for i in self:
             i.vivo_manga = i.largo_manga * i.manga_factor
 
@@ -903,7 +904,7 @@ class tra_MateriaIndirecta(models.Model):
     @api.onchange('vivo_largo', 'vivo_ancho', 'vivo_manga')
     def _get_costo_vivo(self):
         for i in self:
-            costo_tela = i.env['tra.tela'].search([('name', '=', i.tela)]).costo_total
+            costo_tela = i.env['tra.tela'].search([('name', '=', i.tela_id.name)]).costo_total
             i.costo_vivo = (i.vivo_largo + i.vivo_ancho + i.vivo_manga) * costo_tela
 
     @api.multi
@@ -1000,7 +1001,7 @@ class tra_MateriaDirecta(models.Model):
     _name = 'tra.materia.directa'
     _description = 'Registra y calcula costos de materia prima de una prenda textil'
 
-    prenda_id = fields.Many2one('tra.prenda', 'Prenda', required = True, store = True)
+    prenda_id = fields.Many2one('product.template', 'Prenda', required = True, store = True)
     talla = fields.Char('Talla', related = 'prenda_id.talla_id.name', store = False)
     tela = fields.Char('Tela', related = 'prenda_id.tela_id.name', store = False)
     ancho_tela = fields.Float('Ancho de Tela (m.)', related = 'prenda_id.tela_id.ancho', store = False)
@@ -1129,12 +1130,3 @@ class tra_MateriaDirecta_Detail(models.Model):
     def _get_valor_total(self):
         for i in self:
             i.total = i.costo * i.cantidad
-
-
-class tra_Proforma(models.Model):
-    _inherit = 'product.template'
-    #_name = 'tra.proforma'
-    #_description = 'Registra y guarda una cotización para clientes'
-
-    name = fields.Char(u'Nro. Cotización' )
-    cliente_id = fields.Many2one('res.partner', string = 'Cliente')

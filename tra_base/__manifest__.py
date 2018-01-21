@@ -24,6 +24,8 @@
     # any module necessary for this one to work correctly
     'depends': ['base',
                 'hr',
+                'sale_management',
+                #'account_invoicing'
                 ],
 
     # always loaded

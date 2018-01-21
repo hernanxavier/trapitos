@@ -5,13 +5,13 @@
     <!-- **************************************
       Vistas para el modelo product.template
     ****************************************-->
-    <!-- Para agregar campos a la pestaña RRHH de empleados -->
+    <!-- Para agregar campos a la pestaña RRHH de empleados
     <record id = "view_form_product_template_inherited" model= "ir.ui.view">
       <field name = "name">view.form.product.template.inherited</field>
       <field name = "model">product.template</field>
       <field name = "inherit_id" ref = "product.product_template_only_form_view"/>
-      <field name = "arch" type = "xml">
-        <!-- ...match and extend elements here! ... -->
+      <field name = "arch" type = "xml"> -->
+        <!-- ...match and extend elements here! ...
         <group name = "group_general" position = "after">
           <group string = 'Proforma' name = "Proforma">
             <field name = "name"/>
@@ -19,7 +19,7 @@
           </group>
         </group>
       </field>
-    </record>
+    </record> -->
 
     <!-- **************************************
       Vistas para el modelo hr.EMPLOYEE
@@ -173,38 +173,22 @@
       </field>
     </record>
 
+
     <!-- **************************************
       Vistas para el modelo tra_PRENDA
     ****************************************-->
-    <!-- Vista TREE -->
-    <record model = 'ir.ui.view' id = 'tra_Prenda_tree'>
-      <field name = 'model'>tra.prenda</field>
-      <field name = 'arch' type = 'xml'>
-        <tree>
-            <field name = 'name'/>
-            <field name = 'tela_id'/>
-            <field name = 'talla_id'/>
-            <field name = 'codigo'/>
-            <field name = 'observacion'/>
-        </tree>
-      </field>
-    </record>
 
-    <!-- Vista FORM -->
-    <record model = 'ir.ui.view' id = 'tra_Prenda_form'>
-      <field name = 'model'>tra.prenda</field>
-      <field name = 'arch' type = "xml">
-        <form>
-          <sheet>
-            <group>
-              <field name = 'name' placeholder = 'Nombre de la prenda'/>
-              <field name = 'tela_id' placeholder = 'Seleccione la tela'/>
-              <field name = 'talla_id' placeholder = 'Seleccione la talla'/>
-              <field name = 'codigo' placeholder = 'Cree un código'/>
-              <field name = 'observacion' placeholder = 'Ingrese un texto'/>
-            </group>
-          </sheet>
-        </form>
+    <!-- Para agregar campos ne ptoduc.template  -->
+    <record id = "product_template_view_form_inherited" model= "ir.ui.view">
+      <field name = "name">product.template.view.form.inherited</field>
+      <field name = "model">product.template</field>
+      <field name = "inherit_id" ref = "product.product_template_form_view"/>
+      <field name = "arch" type = "xml">
+        <xpath expr ='//field[@name = "type"]' position = 'before'>
+          <field name = "tela_id"/>
+          <field name = "talla_id"/>
+          <field name = "forro_id"/>
+        </xpath>
       </field>
     </record>
 
@@ -773,29 +757,29 @@
     <!-- **************************************
       Vistas para el modelo tra_MateriaIndirecta
     ****************************************-->
-    <!-- TREE -->
+    <!-- TREE
     <record model = 'ir.ui.view' id = 'tra_MateriaIndirecta_tree'>
       <field name = 'model'>tra.materia.indirecta</field>
       <field name = 'arch' type = 'xml'>
-        <tree string = 'Costo de materia prima indirecta' >
-          <field name = 'prenda_id'/>
+        <tree string = 'Costo de materia prima indirecta' > -->
+          <!-- <field name = 'prenda_id'/>
           <field name = 'talla'/>
-          <field name = 'tela'/>
-          <field name = 'vivo_largo'/>
+          <field name = 'tela'/> -->
+          <!-- <field name = 'vivo_largo'/>
           <field name = 'vivo_ancho'/>
           <field name = 'vivo_manga'/>
         </tree>
       </field>
-    </record>
+    </record> -->
 
-    <!-- Vista FORM -->
+    <!-- Vista FORM
     <record model = 'ir.ui.view' id = 'tra_MateriaIndirecta_form'>
       <field name = 'model'>tra.materia.indirecta</field>
       <field name = 'arch' type = 'xml'>
         <form string = 'Costo de materia prima indirecta'>
           <sheet>
-            <group>
-              <field name = 'prenda_id' placeholder = 'Seleccione la prenda'/>
+            <group> -->
+              <!--<field name = 'prenda_id' placeholder = 'Seleccione la prenda'/>
               <field name = 'talla' readonly ='1'/>
               <field name = 'tela' readonly = '1'/>
               <field name = 'largo_prenda' placeholder = 'Ingrese medida en cm.'/>
@@ -848,7 +832,7 @@
           </sheet>
         </form>
       </field>
-    </record>
+    </record> -->
 
     <!-- **************************************
       Vistas para el modelo tra_MateriaDirecta

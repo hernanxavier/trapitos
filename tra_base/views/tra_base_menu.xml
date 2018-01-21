@@ -5,9 +5,9 @@
       <menuitem id = 'menu_base_color' action = 'tra_color_tela_action' name = 'Colores' parent = 'menu_base_root' sequence = '1'/>
       <menuitem id = 'menu_base_tela' action = 'tra_tela_action' name = 'Telas' parent = 'menu_base_root' sequence = '2'/>
       <menuitem id = 'menu_base_talla' action = 'tra_talla_action' name = 'Tallas' parent = 'menu_base_root' sequence = '3'/>
-      <menuitem id = 'menu_base_prenda' action = 'tra_prenda_action' name = 'Prendas' parent = 'menu_base_root' sequence = '4'/>
+      <!-- <menuitem id = 'menu_base_prenda' action = 'tra_prenda_action' name = 'Prendas' parent = 'menu_base_root' sequence = '4'/> -->
       <menuitem id = 'menu_base_accesorio' action = 'tra_accesorio_action' name = 'Accesorios Extra' parent = 'menu_base_root' sequence = '5'/>
-      <menuitem id = 'menu_base_materia_prima_indirecta' action = 'tra_materia_indirecta_action' name = 'Materia Prima Indirecta' parent = 'menu_base_root' sequence = '6'/>
+      <!-- <menuitem id = 'menu_base_materia_prima_indirecta' action = 'tra_materia_indirecta_action' name = 'Materia Prima Indirecta' parent = 'menu_base_root' sequence = '6'/> -->
       <menuitem id = 'menu_base_materia_prima_directa' action = 'tra_materia_directa_action' name = 'Materia Prima Directa' parent = 'menu_base_root' sequence = '7'/>
       <menuitem id = 'menu_base_materia_prima_extra' action = 'tra_materia_prima_extra_action' name = 'Materia Prima Extra' parent = 'menu_base_root' sequence = '8'/>
       <menuitem id = 'menu_base_materia_forro' action = 'tra_materia_forro_action' name = 'Materia Prima Forro' parent = 'menu_base_root' sequence = '9'/>
