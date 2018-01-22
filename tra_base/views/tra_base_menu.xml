@@ -8,7 +8,7 @@
       <!-- <menuitem id = 'menu_base_prenda' action = 'tra_prenda_action' name = 'Prendas' parent = 'menu_base_root' sequence = '4'/> -->
       <menuitem id = 'menu_base_accesorio' action = 'tra_accesorio_action' name = 'Accesorios Extra' parent = 'menu_base_root' sequence = '5'/>
       <!-- <menuitem id = 'menu_base_materia_prima_indirecta' action = 'tra_materia_indirecta_action' name = 'Materia Prima Indirecta' parent = 'menu_base_root' sequence = '6'/> -->
-      <menuitem id = 'menu_base_materia_prima_directa' action = 'tra_materia_directa_action' name = 'Materia Prima Directa' parent = 'menu_base_root' sequence = '7'/>
+      <!-- <menuitem id = 'menu_base_materia_prima_directa' action = 'tra_materia_directa_action' name = 'Materia Prima Directa' parent = 'menu_base_root' sequence = '7'/> -->
       <menuitem id = 'menu_base_materia_prima_extra' action = 'tra_materia_prima_extra_action' name = 'Materia Prima Extra' parent = 'menu_base_root' sequence = '8'/>
       <menuitem id = 'menu_base_materia_forro' action = 'tra_materia_forro_action' name = 'Materia Prima Forro' parent = 'menu_base_root' sequence = '9'/>
       <menuitem id = 'menu_base_tiempo_trabajo' action = 'tra_tiempo_trabajo_action' name = 'Jornadas Loborales' parent = 'menu_base_root' sequence = '10'/>

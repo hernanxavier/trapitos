@@ -998,14 +998,15 @@ class tra_MateriaIndirecta_Extra(models.Model):
             i.total = i.costo * i.cantidad
 
 class tra_MateriaDirecta(models.Model):
-    _name = 'tra.materia.directa'
+    #_name = 'tra.materia.directa'
     _description = 'Registra y calcula costos de materia prima de una prenda textil'
+    _inherit = 'product.template'
 
-    prenda_id = fields.Many2one('product.template', 'Prenda', required = True, store = True)
-    talla = fields.Char('Talla', related = 'prenda_id.talla_id.name', store = False)
-    tela = fields.Char('Tela', related = 'prenda_id.tela_id.name', store = False)
-    ancho_tela = fields.Float('Ancho de Tela (m.)', related = 'prenda_id.tela_id.ancho', store = False)
-    costo_tela = fields.Float('Costo de Tela x m.', related = 'prenda_id.tela_id.costo')
+    #prenda_id = fields.Many2one('product.template', 'Prenda', required = True, store = True)
+    #talla = fields.Char('Talla', related = 'prenda_id.talla_id.name', store = False)
+    #tela = fields.Char('Tela', related = 'prenda_id.tela_id.name', store = False)
+    ancho_tela = fields.Float('Ancho de Tela (m.)', related = 'tela_id.ancho', store = False)
+    costo_tela = fields.Float('Costo de Tela x m.', related = 'tela_id.costo')
     largo_frente = fields.Float('Largo de Frente', size = 6, required = True)
     ancho_frente = fields.Float('Ancho de Frente', size = 6, required = True)
     largo_espalda = fields.Float('Largo de Espalda', size = 6, required = True)

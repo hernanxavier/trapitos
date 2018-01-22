@@ -772,16 +772,15 @@
       </field>
     </record> -->
 
-    <!-- Vista FORM
-    <record model = 'ir.ui.view' id = 'tra_MateriaIndirecta_form'>
-      <field name = 'model'>tra.materia.indirecta</field>
-      <field name = 'arch' type = 'xml'>
-        <form string = 'Costo de materia prima indirecta'>
-          <sheet>
-            <group> -->
-              <!--<field name = 'prenda_id' placeholder = 'Seleccione la prenda'/>
-              <field name = 'talla' readonly ='1'/>
-              <field name = 'tela' readonly = '1'/>
+    <!-- Vista FORM -->
+    <record id = "product_template_view_form_indirecta_inherited" model= "ir.ui.view">
+      <field name = "name">product.template.view.form.indirecta.inherited</field>
+      <field name = "model">product.template</field>
+      <field name = "inherit_id" ref = "product.product_template_form_view"/>
+      <field name = "arch" type = "xml">
+        <xpath expr ='//page[@name = "general_information"]' position = 'after'>
+          <page string="Materia Prima Indirecta" name="materia_prima_indirecta">
+            <group>
               <field name = 'largo_prenda' placeholder = 'Ingrese medida en cm.'/>
               <field name = 'largo_factor' placeholder = 'Ingrese factor de multiplicación'/>
               <field name = 'ancho_prenda' placeholder = 'Ingrese medida en cm.'/>
@@ -829,15 +828,81 @@
               <field name = 'suma_accesorios' readonly = '1' force_save = '1'/>
               <field name = 'costo_materia_indirecta' readonly = '1' force_save = '1'/>
             </group>
-          </sheet>
-        </form>
+          </page>
+        </xpath>
+      </field>
+    </record>
+
+
+
+    <!--
+    <record id = "product_template_view_form_indirecta_inherited" model= "ir.ui.view">
+      <field name = "name">product.template.view.form.indirecta.inherited</field>
+      <field name = "model">product.template</field>
+      <field name = "inherit_id" ref = "product.product_template_form_view"/>
+      <field name = 'model'></field>
+      <field name = 'arch' type = 'xml'> -->
+        <!-- <form string = 'Costo de materia prima indirecta'> -->
+        <!-- <page string="General Information" name="general_information" position = 'after'>
+          <group> -->
+            <!--<field name = 'prenda_id' placeholder = 'Seleccione la prenda'/>
+            <field name = 'talla' readonly ='1'/>
+            <field name = 'tela' readonly = '1'/> -->
+            <!-- <field name = 'largo_prenda' placeholder = 'Ingrese medida en cm.'/>
+            <field name = 'largo_factor' placeholder = 'Ingrese factor de multiplicación'/>
+            <field name = 'ancho_prenda' placeholder = 'Ingrese medida en cm.'/>
+            <field name = 'ancho_factor' placeholder = 'Ingrese factor de multiplicación'/>
+            <field name = 'largo_manga' placeholder = 'Ingrese medida en cm.'/>
+            <field name = 'manga_factor' placeholder = 'Ingrese factor de multiplicación'/>
+            <field name = 'vivo_largo' readonly = '1' force_save = '1'/>
+            <field name = 'vivo_ancho' readonly = '1' force_save = '1'/>
+            <field name = 'vivo_manga' readonly = '1' force_save = '1'/>
+          </group>
+          <group string = 'Listado de Materiales Indirectos'>
+            <field name="materiales_indirectos_ids" widget="many2many_list" colspan="4" nolabel="1">
+              <tree editable = "bottom">
+                <field name = "cantidad" force_save = '1' />
+                <field name = "material_ids" force_save = '1'/>
+                <field name = "costo" force_save = '1'/>
+                <field name = "total" force_save = '1'/>
+              </tree>
+            </field>
+          </group>
+          <group string = 'Listado de Materia Prima Extra'>
+            <field name="materias_extras_ids" widget="many2many_list" colspan="4" nolabel="1">
+              <tree editable = "bottom">
+                <field name = "cantidad" force_save = '1' />
+                <field name = "materia_extra_ids" force_save = '1'/>
+                <field name = "costo" force_save = '1'/>
+                <field name = "total" force_save = '1'/>
+              </tree>
+            </field>
+          </group>
+          <group string = 'Listado de Accesorios'>
+            <field name="accesorios_ids" widget="many2many_list" colspan="4" nolabel="1">
+              <tree editable = "bottom">
+                <field name = "cantidad" force_save = '1' />
+                <field name = "accesorio_ids" force_save = '1'/>
+                <field name = "costo" force_save = '1'/>
+                <field name = "total" force_save = '1'/>
+              </tree>
+            </field>
+          </group>
+          <group>
+            <field name = 'costo_vivo' readonly = '1' force_save ='1'/>
+            <field name = 'suma_materiales' readonly = '1' force_save ='1'/>
+            <field name = 'suma_extras' readonly = '1' force_save = '1'/>
+            <field name = 'suma_accesorios' readonly = '1' force_save = '1'/>
+            <field name = 'costo_materia_indirecta' readonly = '1' force_save = '1'/>
+          </group>
+        </page>
       </field>
     </record> -->
 
     <!-- **************************************
       Vistas para el modelo tra_MateriaDirecta
     ****************************************-->
-    <!-- TREE -->
+    <!-- TREE
     <record model = 'ir.ui.view' id = 'tra_MateriaDirecta_tree'>
       <field name = 'model'>tra.materia.directa</field>
       <field name = 'arch' type = 'xml'>
@@ -847,9 +912,61 @@
           <field name = 'tela'/>
         </tree>
       </field>
-    </record>
+    </record> -->
 
     <!-- Vista FORM -->
+
+    <record id = "product_template_view_form_directa_inherited" model= "ir.ui.view">
+      <field name = "name">product.template.view.form.directa.inherited</field>
+      <field name = "model">product.template</field>
+      <field name = "inherit_id" ref = "product.product_template_form_view"/>
+      <field name = "arch" type = "xml">
+        <xpath expr ='//page[@name = "materia_prima_indirecta"]' position = 'after'>
+          <page string="Materia Prima Directa" name="materia_prima_directa">
+            <group>
+              <!-- <field name = 'prenda_id' placeholder = 'Seleccione la prenda' force_save = '1'/>
+              <field name = 'talla' readonly = '1'/>
+              <field name = 'tela' readonly = '1'/> -->
+              <field name = 'ancho_tela' readonly = '1'/>
+              <field name = 'costo_tela' readonly = '1'/>
+              <field name = 'largo_frente' placeholder = 'Ingrese medida en cm.'/>
+              <field name = 'ancho_frente' placeholder = 'Ingrese medida en cm.'/>
+              <field name = 'largo_espalda' placeholder = 'Ingrese medida en cm.'/>
+              <field name = 'ancho_espalda' placeholder = 'Ingrese medida en cm.'/>
+              <field name = 'largo_manga' placeholder = 'Ingrese medida en cm.'/>
+              <field name = 'ancho_manga' placeholder = 'Ingrese medida en cm.'/>
+              <field name = 'scrap' placeholder = 'Ingrese medida en cm.'/>
+              <field name = 'largo_person' placeholder = 'Ingrese medida en cm.'/>
+              <field name = 'cantidad_tela' readonly = '1' force_save = '1'/>
+              <field name = 'tela_extra' placeholder = 'Ingrese medida en cm.'/>
+            </group>
+            <group string = 'Lista de Materia Prima Extra'>
+              <field name="detalles_ids" widget="many2many_list" colspan="4" nolabel="1">
+                <tree editable = "bottom">
+                  <field name = "cantidad" force_save = '1' />
+                  <field name = "materia_extra_ids" force_save = '1'/>
+                  <field name = "costo" force_save = '1'/>
+                  <field name = "total" force_save = '1'/>
+                </tree>
+              </field>
+            </group>
+            <group>
+              <field name = 'costo_materia_extra' readonly = '1' force_save = '1'/>
+              <field name = 'total_largo' readonly = '1' force_save = '1'/>
+              <field name = 'total_ancho' readonly = '1' force_save = '1'/>
+              <field name = 'num_piezas' readonly = '1' force_save = '1'/>
+              <field name = 'costo_tela_cuerpo' readonly = '1' force_save = '1'/>
+              <field name = 'costo_tela_extra' readonly = '1' force_save = '1'/>
+              <field name = 'total_tela_utilizada' readonly = '1' force_save = '1'/>
+              <field name = 'total_costo_tela' readonly = '1' force_save = '1'/>
+            </group>
+          </page>
+        </xpath>
+      </field>
+    </record>
+
+
+    <!--
     <record model = 'ir.ui.view' id = 'tra_MateriaDirecta_form'>
       <field name = 'model'>tra.materia.directa</field>
       <field name = 'arch' type = 'xml'>
@@ -895,7 +1012,7 @@
           </sheet>
         </form>
       </field>
-    </record>
+    </record> -->
 
     <!-- **************************************
       Vistas para el modelo tra_PROFORMA
